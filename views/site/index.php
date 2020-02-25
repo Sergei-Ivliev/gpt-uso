@@ -48,7 +48,7 @@ use yii\helpers\Html;; ?>
                 <p>В данном разделе представлены все документы сопряжённые с занимаемой должностью работника</p>
 
                 <p>
-                    <?= Html::a('Перейти', ['create'], ['class' => 'btn btn-primary']) ?>
+                    <?= Html::a('Перейти', ['/file/index'], ['class' => 'btn btn-primary']) ?>
                 </p>
             </div>
             <div class="col-lg-3">

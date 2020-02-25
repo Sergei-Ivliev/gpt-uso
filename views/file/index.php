@@ -71,8 +71,11 @@ if (Yii::$app->user->can('admin')) {
 
 ?>
 
-    <div class="row">
+    <div class="site-about">
         <h1>Список файлов</h1>
+        <p>
+            <?= Html::a('Загрузить новый', ['/file/upload'], ['class' => 'btn btn-success']) ?>
+        </p>
     </div>
 
 <?= GridView::widget([
