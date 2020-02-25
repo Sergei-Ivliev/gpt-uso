@@ -13,7 +13,7 @@ $config = [
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
-        '@storage'   => '/web/uploads',
+        '@storage'   => 'uploads',
     ],
     'modules' => [
         'testing' => [
