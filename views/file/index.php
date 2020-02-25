@@ -1,32 +1,81 @@
 <?php
-/* @var $this yii\web\View */
-/* @var $model File */
+
+/**
+ * @var $this yii\web\View
+ * @var $provider ActiveDataProvider
+ * @property Category $category
+ */
 
 use app\models\Category;
 use app\models\File;
-use yii\helpers\ArrayHelper;
+use yii\data\ActiveDataProvider;
+use yii\grid\ActionColumn;
+use yii\grid\GridView;
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
-?>
+use yii\helpers\Url;
 
-<?php $form = ActiveForm::begin(['options' => []]) ?>
-<?= $form->field($model, 'title')->textInput() ?>
-<?= $form->field($model, 'path')->fileInput() ?>
-<?php
-// получаем все категории
-$files = Category::find()->all();
-// формируем массив, с ключем равным полю 'id' и значением равным полю 'title'
-$items = ArrayHelper::map($files, 'id', 'title');
-$params = [
-    'prompt' => 'Укажите категорию'
+$columns = [
+
+    [
+        // activity.id - пример перезаписи значения
+        'label' => 'Порядковый номер',
+        'value' => function (File $model) {
+            return "# {$model->id}";
+        },
+    ],
+    //'id',
+    'title',
+    'date_in:date',
+    //'user_id',
+    [
+        'label' => 'Категория документа',
+        'attribute' => 'category_id', // авто-подключение зависимостей
+        'value' => function (File $model) {
+            return $model->category->title;
+        }
+        // $model->category->title
+    ],
+    'created_at:datetime',
+    'updated_at:datetime',
+    [
+        'label' => 'Ссылка на документ',
+        'value' => function(File $model)
+        {
+            return Html::a('Ознакомиться',Yii::$app->homeUrl. 'uploads/'. $model->path,['target' => '_blank']);
+        },
+        'format' => 'raw',
+        'contentOptions' => ['style' => 'text-align:center; '],
+
+        //рабочий вариант отображения уменьшенной копии изображения
+//        'attribute' => 'path',
+//        'format' => 'raw',
+//        'value' => function (File $model) {
+//            if ($model->path!='')
+//                return '<img src="'.Yii::$app->homeUrl. 'uploads/'.$model->path.'" width="50px" height="auto">'; else return 'no image';
+//        },
+    ],
 ];
-echo $form->field($model, 'category_id')->dropDownList($items, $params);
-?>
-<?= $form->field($model, 'number')->textInput() ?>
-<?= $form->field($model, 'date_in')->textInput(['type' => 'date']) ?>
 
-    <div class="form-group">
-        <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
+if (Yii::$app->user->can('admin')) {
+    $columns[] = [
+        'class' => ActionColumn::class,
+        'header' => 'Операции',
+    ];
+} else if (Yii::$app->user->can('user')) {
+    $columns[] = [
+        'class' => ActionColumn::class,
+        'header' => 'Операции',
+        'template' => '{view}'
+    ];
+}
+
+?>
+
+    <div class="row">
+        <h1>Список файлов</h1>
     </div>
 
-<?php ActiveForm::end() ?>
+<?= GridView::widget([
+    'dataProvider' => $provider, // $provider->getModels() [....]
+    'columns' => $columns,
+]) ?>
