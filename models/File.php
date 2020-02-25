@@ -27,11 +27,6 @@ use yii\web\UploadedFile;
 class File extends ActiveRecord
 {
 
-//    public function behaviors()
-//    {
-//        return [TimestampBehavior::class,];
-//    }
-
  public function behaviors()
   {
       return [
@@ -39,7 +34,7 @@ class File extends ActiveRecord
          [
            'class' => FileUploadBehavior::class,
            'storagePath' => '@storage',
-           'uploadPath' => '/uploads/images',
+           'uploadPath' => '/documents',
            'attributes' => ['path'],
 //           'callback' => function (string $filename) {...},
          ],
