@@ -1,12 +1,7 @@
 <?php
 
-
 namespace app\controllers;
 
-
-use app\modules\testing\models\Question;
-use app\modules\testing\models\QuestionsTests;
-use app\modules\testing\models\Test;
 use app\modules\testing\models\TestForm;
 use Yii;
 use yii\filters\AccessControl;
@@ -65,12 +60,11 @@ class TestController extends Controller
      */
     public function actionIndex()
     {
-//        $item = new TestForm();
-//        return $this->render('index', [
-//            'model' => $item
-//        ]);
+        $item = new TestForm();
+        return $this->render('index', [
+            'model' => $item
+        ]);
 
-        return $this->render('index');
     }
 
     public function actionDisplayTest()
@@ -80,10 +74,9 @@ class TestController extends Controller
         ]);
     }
 
-    public function actionTestInfo()
+    public function action_testinfo()
     {
-        return $this->render('_testinfo', [
-            'id_test' => Yii::$app->request->post('id_test'),
-        ]);
+        return $this->render('_testinfo');
     }
+
 }
