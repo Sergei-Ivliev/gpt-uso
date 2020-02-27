@@ -13,7 +13,9 @@ use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 
 AppAsset::register($this);
-Result::userNeedTests();
+if (!\Yii::$app->getUser()->isGuest) {
+    Result::userNeedTests();
+}
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -33,7 +35,6 @@ Result::userNeedTests();
     <?php
     NavBar::begin([
         'brandLabel' => Html::img(Yii::$app->homeUrl. 'uploads//Logo/logo.png' , ['style' => 'width:150px; margin-top:-22px']),
-//        'brandLabel' => Yii::$app->name,
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
