@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\forms\SignupForm;
+use app\models\User;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -67,6 +68,17 @@ class SiteController extends Controller
         ];
     }
 
+    public function afterAction($action, $result)
+    {
+        $user = User::findIdentity(\Yii::$app->user->id);
+        if (!Yii::$app->user->isGuest) {
+            $time=time();
+            $user->status = $time;
+            $user->save(false);
+        }
+        return parent::afterAction($action, $result);
+    }
+
     /**
      * Displays homepage.
      *
@@ -127,4 +139,11 @@ class SiteController extends Controller
 
         return $this->goHome();
     }
+
+
+    public function actionTemp()
+    {
+        return $this->render('temp');
+    }
+
 }

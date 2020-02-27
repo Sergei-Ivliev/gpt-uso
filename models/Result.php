@@ -19,6 +19,9 @@ use yii\db\ActiveRecord;
  * @property int $quantity
  * @property bool $status
  * @property int $userID
+ *
+ * @property-read User $user
+ * @property-read Test $test
  */
 class Result extends ActiveRecord
 {
@@ -66,18 +69,18 @@ class Result extends ActiveRecord
             'date_test' => 'Дата прохождения',
             'attempts' => 'Количество попыток',
             'quantity' => 'Количество баллов',
-            'status' => 'Результат',
+            'status' => 'Результат(сдал?)',
         ];
     }
 
     public function getUser()
     {
-        return $this->hasMany(User::class, ['id' => 'user_id']);
+        return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
     public function getTest()
     {
-        return $this->hasMany(Test::class, ['id' => 'test_id']);
+        return $this->hasOne(Test::class, ['id' => 'test_id']);
     }
 
     /* Проверка наличия записи в БД  */

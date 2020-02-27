@@ -22,6 +22,8 @@ if ($test) {
 
         <div class="testInfoBlock col-lg-3">
             <div class="timeWindow">
+
+                <span id="time1"></span>
                 <span id="time"></span>
             </div>
             <br>
@@ -89,7 +91,13 @@ if ($test) {
                     'Проверить', ['class' => 'btn btn-success']), ['class' => 'form-group']);
             }
             ?>
+
         </div>
+
+
+        </div>
+
+
     </div>
     <?php
     ActiveForm::end();
