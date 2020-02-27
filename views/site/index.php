@@ -39,7 +39,7 @@ use yii\helpers\Html;; ?>
                 а также, после ознакомления прилегающей информации, сможет пройти тестирование</p>
 
                 <p>
-                    <?= Html::a('Перейти', ['create'], ['class' => 'btn btn-primary']) ?>
+                    <?= Html::a('Перейти', ['temp'], ['class' => 'btn btn-primary']) ?>
                 </p>
             </div>
             <div class="col-lg-3">
@@ -58,7 +58,7 @@ use yii\helpers\Html;; ?>
                     и после ознакомления, возможность пройти тестирование</p>
 
                 <p>
-                    <?= Html::a('Перейти', ['create'], ['class' => 'btn btn-primary']) ?>
+                    <?= Html::a('Перейти', ['temp'], ['class' => 'btn btn-primary']) ?>
                 </p>
             </div>
         </div>
