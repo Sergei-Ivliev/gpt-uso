@@ -9,6 +9,7 @@ use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
 
 class FileController extends Controller
@@ -19,7 +20,7 @@ class FileController extends Controller
             'access' => [
                 // доступ только для админов
                 'class' => AccessControl::class,
-                'only' => ['create', 'update', 'delete'],
+                'only' => ['upload', 'update', 'delete'],
                 'rules' => [
                     [
                         'allow' => true,
@@ -46,6 +47,16 @@ class FileController extends Controller
         ]);
     }
 
+    public function actionView(int $id)
+    {
+        $item = File::findOne($id);
+
+        // просматривать файлы может любой авторизоанный пользователь
+        return $this->render('view', [
+            'model' => $item,
+        ]);
+    }
+
     public function actionUpload()
     {
 //        var_dump();
@@ -56,9 +67,23 @@ class FileController extends Controller
             if ($model->load(Yii::$app->request->post()) && $model->validate()) {
                 Yii::$app->session->setFlash('success', 'Изображение загружено');
                 $model->save();
-                return $this->render('upload', ['model' => $model]);
+                return $this->render('view', ['model' => $model]);
             }
         }
         return $this->render('upload', ['model' => $model]);
+    }
+
+    public function actionDelete(int $id)
+    {
+        $item = File::findOne($id);
+
+        // удалять записи может только админ
+        if (Yii::$app->user->can('admin')) {
+            $item->delete();
+
+            return $this->redirect(['file/index']);
+        }
+
+        throw new NotFoundHttpException();
     }
 }

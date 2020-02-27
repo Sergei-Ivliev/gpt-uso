@@ -20,13 +20,13 @@ $columns = [
         // activity.id - пример перезаписи значения
         'label' => 'Порядковый номер',
         'value' => function (File $model) {
-            return "# {$model->id}";
+            return "№ {$model->id}";
         },
     ],
-    //'id',
+//    'id',
     'title',
     'date_in:date',
-    //'user_id',
+    'number',
     [
         'label' => 'Категория документа',
         'attribute' => 'category_id', // авто-подключение зависимостей
@@ -35,8 +35,8 @@ $columns = [
         }
         // $model->category->title
     ],
-    'created_at:datetime',
-    'updated_at:datetime',
+//    'created_at:datetime',
+//    'updated_at:datetime',
     [
         'label' => 'Ссылка на документ',
         'value' => function(File $model)
