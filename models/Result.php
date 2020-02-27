@@ -40,6 +40,12 @@ class Result extends ActiveRecord
         ];
     }
 
+    public static $testArray = [];
+    public static $testNames = [];
+    public static $testComplete = [];
+    public static $testForUser = [];
+    public static $firstID;
+
 
     /**
      * @return int
@@ -143,4 +149,64 @@ class Result extends ActiveRecord
 
         $recordTest->save();
     }
+
+    /* Получаем массив с актуальными тестами (ID, name)  */
+    public static function actualTests()
+    {
+        $sql = Yii::$app->db->createCommand("SELECT `id`, `name` FROM tests")->queryAll();
+
+        foreach ($sql as $testID) {
+            self::$testArray[] = $testID['id'];
+
+            self::$testNames[] = $testID;
+        }
+    }
+
+    /* Находим ID сданных тестов  */
+    public static function userTestComplete()
+    {
+        $userID = self::getUserID();
+
+        $sql1 = Yii::$app->db->createCommand(
+            "SELECT `test_id` FROM results WHERE user_id = $userID AND status = 1")
+            ->queryAll();
+        if ($sql1 !== null) {
+            foreach ($sql1 as $testID) {
+                self::$testComplete[] = $testID['test_id'];
+            }
+        }
+
+    }
+
+    /* Получаем массив с тестами для сдачи (ID, name)
+        и ID первого тестта для отображения */
+    public static function userNeedTests()
+    {
+        $arr = [];
+        self::actualTests();
+        self::userTestComplete();
+
+        if (!empty(self::$testComplete)) {
+            foreach (self::$testComplete as $val) {
+                $testID[] = $val;
+                $arr = array_values(array_diff(self::$testArray, $testID));
+            }
+        } else {
+            $arr = self::$testArray;
+        }
+
+        foreach ($arr as $item => $value) {
+            foreach (self::$testNames as $id => $name) {
+                if ($value == $name['id']) {
+                    self::$testForUser[] = $name;
+                }
+            }
+        }
+
+        /* Находим первый ID для отображения теста  */
+        if (self::$testForUser[0]['id'] != null) {
+            self::$firstID = self::$testForUser[0]['id'];
+        }
+    }
+
 }

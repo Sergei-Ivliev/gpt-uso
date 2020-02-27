@@ -22,6 +22,7 @@ if ($test) {
 
         <div class="testInfoBlock col-lg-3">
             <div class="timeWindow">
+
                 <span id="time1"></span>
                 <span id="time"></span>
             </div>
@@ -53,7 +54,7 @@ if ($test) {
 
             <?php
             $form = ActiveForm::begin([
-                'id' => $id_form, 'action' => ['/testing'], //testing/default/index'enableAjaxValidation' => false,
+                'id' => $id_form, 'action' => ['/testing'],
                 'enableClientValidation' => true
             ]);
             /** @var TestForm $id */
@@ -93,10 +94,12 @@ if ($test) {
 
         </div>
 
-    </div>
 
+        </div>
+
+
+    </div>
     <?php
     ActiveForm::end();
 }
 ?>
-

@@ -140,8 +140,10 @@ class SiteController extends Controller
         return $this->goHome();
     }
 
+
     public function actionTemp()
     {
         return $this->render('temp');
     }
+
 }

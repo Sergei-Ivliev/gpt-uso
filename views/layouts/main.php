@@ -3,6 +3,7 @@
 /* @var $this View */
 /* @var $content string */
 
+use app\models\Result;
 use app\widgets\Alert;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
@@ -12,6 +13,7 @@ use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 
 AppAsset::register($this);
+Result::userNeedTests();
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -42,7 +44,9 @@ AppAsset::register($this);
         'items' => [
             ['label' => 'Главная', 'url' => ['/site/index']],
 
-            ['label' => 'Пройти тест', 'url' => ['/test/index'], 'visible'=>Yii::$app->user->can('user')],
+            ['label' => 'Пройти тест', 'url' => ['/test/index'],
+                'visible'=>Yii::$app->user->can('user') &&
+                    Result::$testForUser[0] !== null],
 
             ['label' => 'Работники', 'url' => ['/user/index'], 'visible'=>Yii::$app->user->can('admin')],
             ['label' => 'События', 'url' => ['/activity/index']],
