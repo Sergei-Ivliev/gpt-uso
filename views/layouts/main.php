@@ -31,10 +31,10 @@ if (!\Yii::$app->getUser()->isGuest) {
 <body>
 <?php $this->beginBody() ?>
 
-<div class="wrap">
+<div class="wrap" style="background: url('/uploads/123.jpg') no-repeat; background-size: 100%">
     <?php
     NavBar::begin([
-        'brandLabel' => Html::img(Yii::$app->homeUrl. 'uploads//Logo/logo.png' , ['style' => 'width:150px; margin-top:-22px']),
+        'brandLabel' => Html::img(Yii::$app->homeUrl. 'uploads//54321.png' , ['style' => 'width:150px; margin-top:-14px; height:inherit']),
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -95,7 +95,7 @@ if (!\Yii::$app->getUser()->isGuest) {
     NavBar::end();
     ?>
 
-    <div class="container">
+    <div class="container" style="margin-top: 50px">
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
@@ -104,7 +104,7 @@ if (!\Yii::$app->getUser()->isGuest) {
     </div>
 </div>
 
-<footer class="footer">
+<footer class="footer" style="height: 30px; margin-top: 60px">
     <div class="container">
         <p class="pull-left">&copy; АФ ООО "Газпромтранс" <?= date('Y') ?></p>
 
