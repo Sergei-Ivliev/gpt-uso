@@ -3,6 +3,7 @@
 /* @var $this View */
 /* @var $content string */
 
+use app\models\Result;
 use app\widgets\Alert;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
@@ -12,6 +13,9 @@ use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 
 AppAsset::register($this);
+if (!\Yii::$app->getUser()->isGuest) {
+    Result::userNeedTests();
+}
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -27,10 +31,10 @@ AppAsset::register($this);
 <body>
 <?php $this->beginBody() ?>
 
-<div class="wrap">
+<div class="wrap" style="background: url('/uploads/123.jpg') no-repeat; background-size: 100%">
     <?php
     NavBar::begin([
-        'brandLabel' => Yii::$app->name,
+        'brandLabel' => Html::img(Yii::$app->homeUrl. 'uploads//54321.png' , ['style' => 'width:150px; margin-top:-14px; height:inherit']),
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -41,7 +45,9 @@ AppAsset::register($this);
         'items' => [
             ['label' => 'Главная', 'url' => ['/site/index']],
 
-            ['label' => 'Пройти тест', 'url' => ['/test/index'], 'visible'=>Yii::$app->user->can('user')],
+            ['label' => 'Пройти тест', 'url' => ['/test/index'],
+                'visible'=>Yii::$app->user->can('user') &&
+                    Result::$testForUser[0] !== null],
 
             ['label' => 'Работники', 'url' => ['/user/index'], 'visible'=>Yii::$app->user->can('admin')],
             ['label' => 'События', 'url' => ['/activity/index']],
@@ -89,7 +95,7 @@ AppAsset::register($this);
     NavBar::end();
     ?>
 
-    <div class="container">
+    <div class="container" style="margin-top: 50px">
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
@@ -98,7 +104,7 @@ AppAsset::register($this);
     </div>
 </div>
 
-<footer class="footer">
+<footer class="footer" style="height: 30px; margin-top: 60px">
     <div class="container">
         <p class="pull-left">&copy; АФ ООО "Газпромтранс" <?= date('Y') ?></p>
 

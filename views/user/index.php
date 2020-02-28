@@ -22,7 +22,6 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-about">
     <h1><?= Html::encode($this->title) ?></h1>
-
     <p>
         <?= Html::a('Создать нового', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
@@ -52,6 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
     [
         'class' => ActionColumn::class,
         'header' => 'Операции',
+        'contentOptions' => ['style' => 'text-align:center']
     ],
     ],
 ])?>

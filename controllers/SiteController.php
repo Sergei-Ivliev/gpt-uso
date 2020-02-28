@@ -141,4 +141,9 @@ class SiteController extends Controller
     }
 
 
+    public function actionTemp()
+    {
+        return $this->render('temp');
+    }
+
 }

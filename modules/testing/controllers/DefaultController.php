@@ -39,6 +39,12 @@ class DefaultController extends Controller
                 Result::testNotCompleted($model->id_test, $this->data);
             }
         }
+
+        Result::userNeedTests();
+        if(!empty(Result::$testForUser)) {
         return $this->redirect(['/test/display-test']);
+        } else {
+            return $this->redirect(['/test/_testinfo']);
+        }
     }
 }
