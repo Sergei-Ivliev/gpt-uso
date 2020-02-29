@@ -69,7 +69,8 @@ class ActivityController extends Controller
         $provider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => [
-                'validatePage' => false,
+//                'validatePage' => false,
+                'pageSize' => 7,
             ],
         ]);
 
