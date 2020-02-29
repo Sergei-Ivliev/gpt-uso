@@ -14,13 +14,6 @@ use yii\helpers\Html;
 $columns = [
 
     [
-        // user.id - пример перезаписи значения
-        'label' => 'Порядковый номер',
-        'value' => function (Result $model) {
-            return "# {$model->id}";
-        },
-    ],
-    [
         'label' => 'Название теста',
         'attribute' => 'test_id', // авто-подключение зависимостей
         'value' => function (Result $model) {

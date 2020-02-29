@@ -17,8 +17,9 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
+
 $this->title = 'Список работников';
-$this->params['breadcrumbs'][] = $this->title;
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-about">
     <h1><?= Html::encode($this->title) ?></h1>
@@ -55,4 +56,61 @@ $this->params['breadcrumbs'][] = $this->title;
     ],
     ],
 ])?>
+
+<?php /** GridView::widget([
+    'dataProvider' => $provider,
+    'columns' => [
+//    [
+//        'class' => SerialColumn::class,
+//        'header' => 'Порядковый номер',
+//        'options' => ['style' => 'background-color:#a8b4f2;'],
+//    ],
+        [
+            'attribute' => 'id',
+            'options' => ['style' => 'background-color:#a8b4f2;'],
+        ],
+        [
+            'attribute' => 'last_name',
+            'options' => ['style' => 'background-color:#a8b4f2;'],
+        ],
+        [
+            'attribute' => 'last_name',
+            'options' => ['style' => 'background-color:#a8b4f2;'],
+        ],
+        [
+            'attribute' => 'third_name',
+            'options' => ['style' => 'background-color:#a8b4f2;'],
+        ],
+        [
+            'attribute' => 'telny_number',
+            'options' => ['style' => 'background-color:#a8b4f2;'],
+        ],
+        [
+            'label' => 'Должность',
+            'attribute' => 'position_id',
+            'value' => function (User $model) {
+                return $model->position->title;
+            },
+            'options' => ['style' => 'background-color:#a8b4f2;'],
+        ],
+        [
+            'attribute' => 'date_birth', 'format' => ['date'],
+            'options' => ['style' => 'background-color:#a8b4f2;'],
+        ],
+        [
+            'attribute' => 'date_receipt', 'format' => ['date'],
+            'options' => ['style' => 'background-color:#a8b4f2;'],
+        ],
+        [
+            'attribute' => 'status', 'format' => ['datetime'],
+            'options' => ['style' => 'background-color:#a8b4f2;'],
+        ],
+        [
+            'class' => ActionColumn::class,
+            'header' => 'Операции',
+            'options' => ['style' => 'background-color:#a8b4f2;'],
+            'contentOptions' => ['style' => 'text-align:center']
+        ],
+    ],
+])*/?>
 </div>
