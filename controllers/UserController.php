@@ -42,11 +42,11 @@ class UserController extends Controller
             'query' => $query,
             'pagination' => [
 //                'validatePage' => false,
-                'pageSize' => 150,
+                'pageSize' => 12,
             ],
         ]);
 
-        return $this->render('index', [
+        return $this->render('@app/views/user/index', [
             'provider' => $provider,
         ]);
     }
@@ -72,7 +72,7 @@ class UserController extends Controller
             Yii::$app->session->setFlash('warning', 'Проверьте правильность заполнения');
         }
 
-        return $this->render('user_homepage', compact('model', 'provider'));
+        return $this->render('@app/views/user/user_homepage', compact('model', 'provider'));
 
     }
 
@@ -83,7 +83,7 @@ class UserController extends Controller
      */
     public function actionView(int $id)
     {
-        return $this->render('view', [
+        return $this->render('@app/views/user/view', [
             'model' => $this->findModel($id),
         ]);
     }
@@ -99,7 +99,7 @@ class UserController extends Controller
             }
         }
 
-        return $this->render('create', [
+        return $this->render('@app/views/user/create', [
             'model' => $model,
         ]);
     }
@@ -118,7 +118,7 @@ class UserController extends Controller
                 }
             }
 
-            return $this->render('update', [
+            return $this->render('@app/views/user/update', [
                 'model' => $item,
             ]);
         } else {
@@ -146,6 +146,11 @@ class UserController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionMobile()
+    {
+        return $this->render('@app/views/user/mobi');
     }
 
 }

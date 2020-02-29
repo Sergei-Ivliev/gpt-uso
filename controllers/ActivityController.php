@@ -70,11 +70,11 @@ class ActivityController extends Controller
             'query' => $query,
             'pagination' => [
 //                'validatePage' => false,
-                'pageSize' => 7,
+                'pageSize' => 12,
             ],
         ]);
 
-        return $this->render('index', [
+        return $this->render('@app/views/activity/index', [
             'provider' => $provider,
         ]);
     }
@@ -112,7 +112,7 @@ class ActivityController extends Controller
 //        }
 
         // просматривать события может любой авторизоанный пользователь
-        return $this->render('view', [
+        return $this->render('@app/views/activity/view', [
             'model' => $item,
         ]);
     }
@@ -139,7 +139,7 @@ class ActivityController extends Controller
                 }
             }
 
-            return $this->render('edit', [
+            return $this->render('@app/views/activity/edit', [
                 'model' => $item,
             ]);
         } else {
