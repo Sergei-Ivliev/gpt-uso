@@ -12,7 +12,26 @@ class m200228_184341_add_columns_tests extends Migration
      */
     public function safeUp()
     {
+        $this->addColumn(
+            'tests',
+            'passed',
+            $this->integer(11)
+                ->comment('Сдали')->defaultValue(0)
+                ->after('description'));
 
+        $this->addColumn(
+            'tests',
+            'total',
+            $this->integer(11)
+                ->comment('Всего')->defaultValue(0)
+                ->after('passed'));
+
+        $this->addColumn(
+            'tests',
+            'closed',
+            $this->tinyInteger(1)
+                ->comment('Пройден всеми')->defaultValue(0)
+                ->after('total'));
     }
 
     /**
@@ -20,23 +39,9 @@ class m200228_184341_add_columns_tests extends Migration
      */
     public function safeDown()
     {
-        echo "m200228_184341_add_columns_tests cannot be reverted.\n";
-
-        return false;
+        $this->dropColumn('tests', 'passed');
+        $this->dropColumn('tests', 'total');
+        $this->dropColumn('tests', 'closed');
     }
 
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
-
-    }
-
-    public function down()
-    {
-        echo "m200228_184341_add_columns_tests cannot be reverted.\n";
-
-        return false;
-    }
-    */
 }
