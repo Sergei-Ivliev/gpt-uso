@@ -30,8 +30,18 @@ if (!\Yii::$app->getUser()->isGuest) {
 </head>
 <body>
 <?php $this->beginBody() ?>
+<?php
+if ((Yii::$app->controller->id == 'site') and (Yii::$app->controller->action->id == 'index' || 'login' || 'signup')) {
+    echo '<div class="wrap" style="background: url(\'/uploads/123.jpg\') no-repeat; background-size: 100%">';
+} else if ((Yii::$app->controller->id == 'user') and (Yii::$app->controller->action->id !== 'index')){
+    echo '<div class="wrap" style="background: url(\'/uploads/123.jpg\') no-repeat; background-size: 100%">';
+} else if ((Yii::$app->controller->id == 'result') and (Yii::$app->controller->action->id == 'index')){
+    echo '<div class="wrap" style="background: url(\'/uploads/123.jpg\') no-repeat; background-size: 100%">';
+} else {
+    echo '<div class="wrap">';
+}
+?>
 
-<div class="wrap" style="background: url('/uploads/123.jpg') no-repeat; background-size: 100%">
     <?php
     NavBar::begin([
         'brandLabel' => Html::img(Yii::$app->homeUrl. 'uploads//54321.png' , ['style' => 'width:150px; margin-top:-14px; height:inherit']),
@@ -79,7 +89,7 @@ if (!\Yii::$app->getUser()->isGuest) {
 //            ),
 
             Yii::$app->user->isGuest ? (
-                ['label' => 'Войти', 'url' => ['/site/login']]
+            ['label' => 'Войти', 'url' => ['/site/login']]
             ) : (
                 '<li>'
                 . Html::beginForm(['/site/logout'], 'post')
@@ -108,7 +118,7 @@ if (!\Yii::$app->getUser()->isGuest) {
     <div class="container">
         <p class="pull-left">&copy; АФ ООО "Газпромтранс" <?= date('Y') ?></p>
 
-<!--        <p class="pull-right">--><?//= Yii::powered() ?><!--</p>-->
+        <!--        <p class="pull-right">--><?//= Yii::powered() ?><!--</p>-->
     </div>
 </footer>
 
