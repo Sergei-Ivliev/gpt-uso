@@ -42,7 +42,7 @@ class UserController extends Controller
             'query' => $query,
             'pagination' => [
 //                'validatePage' => false,
-                'pageSize' => 10,
+                'pageSize' => 150,
             ],
         ]);
 
