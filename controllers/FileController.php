@@ -17,14 +17,29 @@ class FileController extends Controller
     public function behaviors()
     {
         return [
+//            'access' => [
+//                // доступ только для админов
+//                'class' => AccessControl::class,
+//                'only' => ['upload', 'update', 'delete'],
+//                'rules' => [
+//                    [
+//                        'allow' => true,
+//                        'roles' => ['admin'],
+//                    ],
+//                ],
+//            ],
             'access' => [
-                // доступ только для админов
                 'class' => AccessControl::class,
-                'only' => ['upload', 'update', 'delete'],
                 'rules' => [
                     [
                         'allow' => true,
+                        'actions' => ['index', 'view', 'update', 'upload', 'delete'],
                         'roles' => ['admin'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['index', 'view',],
+                        'roles' => ['user'],
                     ],
                 ],
             ],
@@ -72,6 +87,27 @@ class FileController extends Controller
         }
         return $this->render('upload', ['model' => $model]);
     }
+
+    public function actionUpdate(int $id = null)
+    {
+        $item = $id ? File::findOne($id) : new File;
+
+        // обновлять записи может только создатель
+        if (Yii::$app->user->can('admin')) {
+            if (Yii::$app->request->isPost) {
+                $item->path = UploadedFile::getInstance($item, 'path');
+                if ($item->load(Yii::$app->request->post()) && $item->validate()) {
+                    Yii::$app->session->setFlash('success', 'Данные успешно изменены');
+                    $item->save();
+                    return $this->render('view', ['model' => $item]);
+                }
+            }
+            return $this->render('upload', ['model' => $item]);
+        } else {
+            throw new NotFoundHttpException();
+        }
+    }
+
 
     public function actionDelete(int $id)
     {
