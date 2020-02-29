@@ -14,7 +14,7 @@ use yii\helpers\Html;; ?>
 
         <?php
         if (Yii::$app->user->isGuest) {
-            echo '<p class=\"lead\">Пожалуйста, авторизуйтесь или зарегестрируйтесь.</p>';
+            echo '<p class=\"lead\">Пожалуйста, авторизуйтесь или зарегистрируйтесь.</p>';
         }
         ?>
 

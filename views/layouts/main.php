@@ -35,7 +35,7 @@ if ((Yii::$app->controller->id == 'site') and (Yii::$app->controller->action->id
     echo '<div class="wrap"  style="background: url(\'/uploads/123.jpg\') no-repeat; background-size: 100%">';
 } else if ((Yii::$app->controller->id == 'user') and (Yii::$app->controller->action->id !== 'index')){
     echo '<div class="wrap"  style="background: url(\'/uploads/123.jpg\') no-repeat; background-size: 100%">';
-} else if ((Yii::$app->controller->id == 'result') and (Yii::$app->controller->action->id == 'index')){
+} else if ((Yii::$app->controller->id == 'result') and (Yii::$app->controller->action->id == 'index' || 'view')){
     echo '<div class="wrap"  style="background: url(\'/uploads/123.jpg\') no-repeat; background-size: 100%">';
 } else {
     echo '<div class="wrap">';

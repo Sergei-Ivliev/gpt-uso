@@ -5,12 +5,14 @@
  * @var $model File
  */
 
+use app\assets\MobileAsset;
 use app\models\File;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+MobileAsset::register($this);
 
 ?>
-    <div class="row">
+    <div class="site-about">
         <h1>Просмотр файла</h1>
 
         <div class="form-group pull-right">

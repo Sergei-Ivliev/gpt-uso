@@ -6,6 +6,7 @@
  * @property Category $category
  */
 
+use app\assets\MobileAsset;
 use app\models\Category;
 use app\models\File;
 use yii\data\ActiveDataProvider;
@@ -13,32 +14,13 @@ use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
+MobileAsset::register($this);
 
 $columns = [
 
-    [
-        // activity.id - пример перезаписи значения
-        'label' => 'Порядковый номер',
-        'value' => function (File $model) {
-            return "№ {$model->id}";
-        },
-    ],
-//    'id',
     'title',
-    'date_in:date',
-    'number',
     [
-        'label' => 'Категория документа',
-        'attribute' => 'category_id', // авто-подключение зависимостей
-        'value' => function (File $model) {
-            return $model->category->title;
-        }
-        // $model->category->title
-    ],
-//    'created_at:datetime',
-//    'updated_at:datetime',
-    [
-        'label' => 'Ссылка на документ',
+        'label' => 'Ссылка',
         'value' => function(File $model)
         {
             return Html::a('Ознакомиться',Yii::$app->homeUrl. 'uploads/'. $model->path,['target' => '_blank']);

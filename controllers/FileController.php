@@ -57,7 +57,7 @@ class FileController extends Controller
             ],
         ]);
 
-        return $this->render('index', [
+        return $this->render('@app/views/file/index', [
             'provider' => $provider,
         ]);
     }
@@ -67,7 +67,7 @@ class FileController extends Controller
         $item = File::findOne($id);
 
         // просматривать файлы может любой авторизоанный пользователь
-        return $this->render('view', [
+        return $this->render('@app/views/file/view', [
             'model' => $item,
         ]);
     }
@@ -82,10 +82,10 @@ class FileController extends Controller
             if ($model->load(Yii::$app->request->post()) && $model->validate()) {
                 Yii::$app->session->setFlash('success', 'Изображение загружено');
                 $model->save();
-                return $this->render('view', ['model' => $model]);
+                return $this->render('@app/views/file/view', ['model' => $model]);
             }
         }
-        return $this->render('upload', ['model' => $model]);
+        return $this->render('@app/views/file/upload', ['model' => $model]);
     }
 
     public function actionUpdate(int $id = null)
@@ -99,10 +99,10 @@ class FileController extends Controller
                 if ($item->load(Yii::$app->request->post()) && $item->validate()) {
                     Yii::$app->session->setFlash('success', 'Данные успешно изменены');
                     $item->save();
-                    return $this->render('view', ['model' => $item]);
+                    return $this->render('@app/views/file/view', ['model' => $item]);
                 }
             }
-            return $this->render('upload', ['model' => $item]);
+            return $this->render('@app/views/file/upload', ['model' => $item]);
         } else {
             throw new NotFoundHttpException();
         }

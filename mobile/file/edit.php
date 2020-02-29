@@ -5,8 +5,10 @@
  * @var $model File
  */
 
+use app\assets\MobileAsset;
 use app\models\File;
 use yii\helpers\Html;
+MobileAsset::register($this);
 
 ?>
 <div class="row">
