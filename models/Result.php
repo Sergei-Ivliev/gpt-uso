@@ -45,6 +45,8 @@ class Result extends ActiveRecord
     public static $testComplete = [];
     public static $testForUser = [];
     public static $firstID;
+    public static $countUsersCompleteTest;
+    public static $countUsers;
 
 
     /**
@@ -132,9 +134,39 @@ class Result extends ActiveRecord
         $recordTest = Result::findOne(['test_id' => $id, 'user_id' => $userID]);
         $recordTest->attempts++;
         $recordTest->quantity = $data;
-
         $recordTest->save();
+    }
 
+    /* Кол-во пользователей, прошедших тест  */
+    public static function getCountUsersCompleteTest($id)
+    {
+        $sql = Yii::$app->db->createCommand("
+        SELECT COUNT(*) 
+        FROM `results` 
+        WHERE `test_id` = {$id} AND `status` = 1")->queryAll();
+
+        foreach ($sql as $value => $item) {
+            self::$countUsersCompleteTest = $item['COUNT(*)'];
+        }
+    }
+
+    /* Общее кол-во пользователей в статусе USER  */
+    public static function getCountUsers()
+    {
+        $sql = Yii::$app->db->createCommand("
+            SELECT COUNT(*) FROM `users` 
+            LEFT JOIN auth_assignment 
+            ON users.id = auth_assignment.user_id 
+            WHERE auth_assignment.item_name = 'user'")->queryAll();
+
+        foreach ($sql as $value => $item) {
+            self::$countUsers = $item['COUNT(*)'];
+        }
+
+        /* Обновляем кол-во пользователей в `tests` на актуальное  */
+        $total = self::$countUsers;
+        $sql2 = "UPDATE `tests` SET `total` = {$total} WHERE `closed` = 0";
+        Yii::$app->db->createCommand($sql2)->execute();
     }
 
     /* Если тест сдан  */
@@ -146,14 +178,33 @@ class Result extends ActiveRecord
         $recordTest->attempts++;
         $recordTest->quantity = $data;
         $recordTest->status = 1;
-
         $recordTest->save();
+
+        if (Yii::$app->user->can('user')) {
+            $passedPlus = Test::findOne(['id' => $id]);
+            $passedPlus->passed++;
+            $passedPlus->save();
+        }
+
+        self::getCountUsersCompleteTest($id);
+        self::getCountUsers();
+
+        /* При совпадении, архивируем тест  */
+        if (self::$countUsersCompleteTest === self::$countUsers) {
+            $sql = "UPDATE `tests` SET `closed`= 1 WHERE id = {$id}";
+            Yii::$app->db->createCommand($sql)->execute();
+
+            /* Удаляем из Results у всех пользователей неактуальный тест */
+            $sql2 = "DELETE FROM `results` WHERE `test_id` = {$id} AND `status` = 1";
+            Yii::$app->db->createCommand($sql2)->execute();
+        }
     }
 
     /* Получаем массив с актуальными тестами (ID, name)  */
     public static function actualTests()
     {
-        $sql = Yii::$app->db->createCommand("SELECT `id`, `name` FROM tests")->queryAll();
+        $sql = Yii::$app->db->createCommand("SELECT `id`, `name` FROM tests WHERE `closed` = 0")
+            ->queryAll();
 
         foreach ($sql as $testID) {
             self::$testArray[] = $testID['id'];
@@ -175,7 +226,6 @@ class Result extends ActiveRecord
                 self::$testComplete[] = $testID['test_id'];
             }
         }
-
     }
 
     /* Получаем массив с тестами для сдачи (ID, name)
