@@ -35,6 +35,8 @@ if ((Yii::$app->controller->id == 'site') and (Yii::$app->controller->action->id
     echo '<div class="wrap"  style="background: url(\'/uploads/123.jpg\') no-repeat; background-size: 100%">';
 } else if ((Yii::$app->controller->id == 'user') and (Yii::$app->controller->action->id !== 'index')){
     echo '<div class="wrap"  style="background: url(\'/uploads/123.jpg\') no-repeat; background-size: 100%">';
+} else if ((Yii::$app->controller->id == 'activity') and (Yii::$app->controller->action->id == 'index')){
+    echo '<div class="wrap"  style="background: url(\'/uploads/123.jpg\') no-repeat; background-size: 100%">';
 } else if ((Yii::$app->controller->id == 'result') and (Yii::$app->controller->action->id == 'index' || 'view')){
     echo '<div class="wrap"  style="background: url(\'/uploads/123.jpg\') no-repeat; background-size: 100%">';
 } else {
@@ -114,9 +116,9 @@ if ((Yii::$app->controller->id == 'site') and (Yii::$app->controller->action->id
     </div>
 </div>
 
-<footer class="footer" style="height: 30px; margin-top: 60px">
+<footer class="footer";">
     <div class="container">
-        <p class="pull-left">&copy; АФ ООО "Газпромтранс" <?= date('Y') ?></p>
+        <p class="pull-left">&copy; АФ ООО <b>"Газпромтранс"</b> <?= date('Y') ?></p>
 
         <!--        <p class="pull-right">--><?//= Yii::powered() ?><!--</p>-->
     </div>
