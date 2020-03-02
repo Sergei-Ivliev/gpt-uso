@@ -13,20 +13,37 @@ use yii\data\ActiveDataProvider;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\helpers\Html;
+use yii\helpers\StringHelper;
 use yii\helpers\Url;
 MobileAsset::register($this);
 
 $columns = [
-
-    'title',
+    [
+        'label' => 'Название',
+        'attribute' => 'title',
+        'content' => function(File $model){
+            return StringHelper::truncate($model->title, 7);
+        },
+        'headerOptions'=>['style'=>'width: 25px;']
+    ],
+    [
+        'label' => 'Категория',
+        'attribute' => 'category_id', // авто-подключение зависимостей
+        'value' => function (File $model) {
+            return $model->category->title;
+        },
+        // $model->category->title
+        'headerOptions'=>['style'=>'width: 25px;']
+    ],
     [
         'label' => 'Ссылка',
         'value' => function(File $model)
         {
-            return Html::a('Ознакомиться',Yii::$app->homeUrl. 'uploads/'. $model->path,['target' => '_blank']);
+            return Html::a('ознако- миться',Yii::$app->homeUrl. 'uploads/'. $model->path,['target' => '_blank']);
         },
         'format' => 'raw',
         'contentOptions' => ['style' => 'text-align:center; '],
+        'headerOptions'=>['style'=>'width: 35px;']
 
         //рабочий вариант отображения уменьшенной копии изображения
 //        'attribute' => 'path',
@@ -41,13 +58,15 @@ $columns = [
 if (Yii::$app->user->can('admin')) {
     $columns[] = [
         'class' => ActionColumn::class,
-        'header' => 'Операции',
+        'header' => 'Опции',
+        'headerOptions'=>['style'=>'width: 35px;']
     ];
 } else if (Yii::$app->user->can('user')) {
     $columns[] = [
         'class' => ActionColumn::class,
-        'header' => 'Операции',
-        'template' => '{view}'
+        'header' => 'Опции',
+        'template' => '{view}',
+        'headerOptions'=>['style'=>'width: 35px;']
     ];
 }
 

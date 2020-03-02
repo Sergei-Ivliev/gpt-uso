@@ -17,16 +17,26 @@ MobileAsset::register($this);
 
 
 $columns = [
-
     [
         'label' => 'Название',
         'attribute' => 'test_id', // авто-подключение зависимостей
         'value' => function (Result $model) {
             return $model->test->name;
-        }
+        },
         // $model->test->name
+        'headerOptions'=>['style'=>'width: 45px;']
     ],
     [
+        'label' => 'Фамилия',
+        'attribute' => 'user_id', // авто-подключение зависимостей
+        'value' => function (Result $model) {
+            return $model->user->last_name;
+        },
+        // $model->user->last_name
+        'headerOptions'=>['style'=>'width: 35px;']
+    ],
+    [
+        'label' => 'Сдал?',
         'attribute' => 'status',
         'format' => 'boolean',
 //        'options' => ['style' => 'width: 65px; color:blue'],
@@ -36,7 +46,8 @@ $columns = [
             } else {
                 return ['style' => 'background-color:#f31d1dd4; font-weight:bold; text-align:center'];
             }
-        }
+        },
+        'headerOptions'=>['style'=>'width: 35px;']
     ],
 ];
 
@@ -45,20 +56,21 @@ if (Yii::$app->user->can('admin')) {
         'class' => ActionColumn::class,
         'header' => 'Операции',
         'template' => '{view}',
-        'contentOptions' => ['style' => 'text-align:center']
+        'contentOptions' => ['style' => 'text-align:center'],
+        'headerOptions'=>['style'=>'width: 35px;']
     ];
 } else if (Yii::$app->user->can('user')) {
     $columns[] = [
         'class' => ActionColumn::class,
         'header' => 'Подробнее',
         'template' => '{view}',
-        'contentOptions' => ['style' => 'text-align:center']
+        'contentOptions' => ['style' => 'text-align:center'],
+        'headerOptions'=>['style'=>'width: 35px;']
     ];
 }
-
 ?>
 
-    <div class="row">
+    <div class="site-about">
         <h1>Список результатов</h1>
     </div>
 

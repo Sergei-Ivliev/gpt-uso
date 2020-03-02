@@ -105,9 +105,9 @@ if (!\Yii::$app->getUser()->isGuest) {
     </div>
 </div>
 
-<footer class="footer" style="height: 30px; margin-top: 60px">
+<footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; АФ ООО "Газпромтранс" <?= date('Y') ?></p>
+        <p class="pull-left">&copy; АФ ООО <b>"Газпромтранс"</b> <?= date('Y') ?></p>
 
         <!--        <p class="pull-right">--><?//= Yii::powered() ?><!--</p>-->
     </div>
