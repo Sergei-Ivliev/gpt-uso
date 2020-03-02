@@ -8,6 +8,7 @@
 
 use app\models\Activity;
 use app\models\User;
+use yii\bootstrap\Carousel;
 use yii\data\ActiveDataProvider;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
@@ -65,7 +66,7 @@ if (Yii::$app->user->can('admin')) {
 
 ?>
 
-    <div class="row">
+    <div class="row" style="margin-top: -50px;">
         <h1>Список событий</h1>
         <?=
         Yii::$app->user->can('admin') ? (
@@ -80,3 +81,32 @@ if (Yii::$app->user->can('admin')) {
     'dataProvider' => $provider, // $provider->getModels() [....]
     'columns' => $columns,
 ]) ?>
+
+<div class="site-about" style="margin-bottom: 18px; margin-top: -30px;">
+    <h1>Новостной блок</h1>
+</div>
+
+<div style="display: flex; justify-content: center;">
+    <?php echo Carousel::widget([
+        'items' => [
+
+            // the item contains both the image and the caption
+            [
+                'content' => '<img src="/uploads/Gazpromtrans.jpg" alt="" style="width: 670px; height: 265px">',
+                'caption' => '<a style="background: #2f55df;border: 1px solid whitesmoke;display: inline-block;margin-bottom: 7px;padding: 5px 15px;text-decoration: none;color: #fefff9;" href="https://trans.gazprom.ru/" target="_blank">Новости Газпромтранса</a>',
+                'options' => ['class' => 'slide'],
+            ],
+            [
+                'content' => '<img src="/uploads/Gazprom.jpg" alt="" style="width: 670px; height: 265px">',
+                'caption' => '<a style="background: #2f55df;border: 1px solid whitesmoke;display: inline-block;margin-bottom: 7px;padding: 5px 15px;text-decoration: none;color: #fefff9;" href="https://www.gazprom.ru/" target="_blank">Официальный сайт</a>',
+                'options' => ['class' => 'slide'],
+            ],
+        ],
+        'controls' => [
+            Html::tag('span', '', ['class' => 'glyphicon glyphicon-chevron-left']),
+            Html::tag('span', '', ['class' => 'glyphicon glyphicon-chevron-right']),
+        ],
+        'options' => ['class' => 'slide', 'style' => "width: 670px; text-align: -webkit-center;"],
+    ]);
+    ?>
+</div>

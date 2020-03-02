@@ -70,7 +70,7 @@ class ActivityController extends Controller
             'query' => $query,
             'pagination' => [
 //                'validatePage' => false,
-                'pageSize' => 12,
+                'pageSize' => 5,
             ],
         ]);
 
