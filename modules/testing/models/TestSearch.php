@@ -20,6 +20,7 @@ class TestSearch extends Test
         return [
             [['id'], 'integer'],
             [['name', 'description'], 'safe'],
+            [['closed'], 'integer'],
         ];
     }
 
@@ -63,7 +64,8 @@ class TestSearch extends Test
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'description', $this->description]);
+            ->andFilterWhere(['like', 'description', $this->description])
+        ->andFilterWhere(['like', 'closed', $this->closed] );
 
         return $dataProvider;
     }

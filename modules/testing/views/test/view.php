@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Result;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -31,6 +32,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'name',
             'description:ntext',
+            'passed',
+            'total',
+            'closed',
         ],
     ]) ?>
 

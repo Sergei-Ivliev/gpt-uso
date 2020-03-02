@@ -18,7 +18,6 @@ YiiAsset::register($this);
 
     <?= Html::submitButton('можете изменить пароль', ['id' => 'changePass', 'class' => 'btn btn-primary btn-sm']) ?></h3>
 
-
 <div class="container">
     <div id="changePassSlider" class="col-lg-3" style="display: none">
 

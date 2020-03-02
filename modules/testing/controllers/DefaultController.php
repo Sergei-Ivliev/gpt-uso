@@ -34,6 +34,7 @@ class DefaultController extends Controller
             if ($correctAnswers >= ($countQuestions * 0.8)) {
                 $this->data = round($correctAnswers / $countQuestions * 100);
                 Result::testCompleted($model->id_test, $this->data);
+
             } else {
                 $this->data = round($correctAnswers / $countQuestions * 100);
                 Result::testNotCompleted($model->id_test, $this->data);
@@ -41,8 +42,8 @@ class DefaultController extends Controller
         }
 
         Result::userNeedTests();
-        if(!empty(Result::$testForUser)) {
-        return $this->redirect(['/test/display-test']);
+        if (!empty(Result::$testForUser)) {
+            return $this->redirect(['/test/display-test']);
         } else {
             return $this->redirect(['/test/_testinfo']);
         }

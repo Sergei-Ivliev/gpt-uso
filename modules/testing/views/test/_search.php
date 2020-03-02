@@ -21,9 +21,26 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'description') ?>
 
-    <div class="form-group">
-        <?= Html::submitButton('Найти', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Сбросить', ['class' => 'btn btn-default']) ?>
+    <?= $form->field($model, 'closed')
+        ->radioList([
+            '0'=>'Активные тесты',
+            '1'=>'Пройденные тесты',
+        ], [
+            'id' => 'blog_type',
+            'class' => 'form-group',
+            'data-toggle' => 'radio',
+            'unselect' => null,
+            'item' => function ($index, $label, $name, $checked, $value) {
+                return '<label class="form check-inline' . ($checked ? ' active' : '') . '">' .
+                    Html::radio($name, $checked, ['value' => $value, 'class' => 'test-status-radio']) . $label . '</label>';
+            },
+        ]);
+    ?>
+
+    <div class="form-group" style="margin-bottom: 2em">
+        <?= Html::submitButton('Найти', ['class' => 'btn btn-primary']) . '&nbsp;&nbsp;'?>
+        <?= Html::resetButton('Сбросить', ['class' => 'btn btn-default']) . '&nbsp;&nbsp;' ?>
+        <?= Html::a('Создать тест', ['create'], ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
