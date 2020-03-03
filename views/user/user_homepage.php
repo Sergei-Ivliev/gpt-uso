@@ -42,7 +42,7 @@ YiiAsset::register($this);
 
 <div>
     <h4>
-        Посмотреть результаты теста можно по этой <?= Html::a('ссылке', ['result/index'], ['class' => 'btn btn-info'])?>
+        Посмотреть результаты теста можно  <?= Html::a('по этой ссылке', ['result/index'], ['class' => 'btn btn-info'])?>
     </h4>
 </div>
 

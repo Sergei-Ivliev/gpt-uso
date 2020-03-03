@@ -54,6 +54,7 @@ if (!\Yii::$app->getUser()->isGuest) {
             [
                 'label' => 'Работа с тестами',
                 'items' => [
+                    ['label' => 'Создать тест', 'url' => ['/testing/test/create']],
                     ['label' => 'Список тестов', 'url' => ['/testing/test']],
                     ['label' => 'Список вопросов', 'url' => ['/testing/question']],
                     ['label' => 'Список ответов', 'url' => ['/testing/answer']],
