@@ -30,19 +30,8 @@ if (!\Yii::$app->getUser()->isGuest) {
 </head>
 <body>
 <?php $this->beginBody() ?>
-<?php
-if ((Yii::$app->controller->id == 'site') and (Yii::$app->controller->action->id == 'index' || 'login' || 'signup')) {
-    echo '<div class="wrap"  style="background: url(\'/uploads/123.jpg\') no-repeat; background-size: 100%">';
-} else if ((Yii::$app->controller->id == 'user') and (Yii::$app->controller->action->id !== 'index')){
-    echo '<div class="wrap"  style="background: url(\'/uploads/123.jpg\') no-repeat; background-size: 100%">';
-} else if ((Yii::$app->controller->id == 'activity') and (Yii::$app->controller->action->id == 'index')){
-    echo '<div class="wrap"  style="background: url(\'/uploads/123.jpg\') no-repeat; background-size: 100%">';
-} else if ((Yii::$app->controller->id == 'result') and (Yii::$app->controller->action->id == 'index' || 'view')){
-    echo '<div class="wrap"  style="background: url(\'/uploads/123.jpg\') no-repeat; background-size: 100%">';
-} else {
-    echo '<div class="wrap">';
-}
-?>
+<div class="wrap">
+
 
     <?php
     NavBar::begin([
@@ -66,7 +55,6 @@ if ((Yii::$app->controller->id == 'site') and (Yii::$app->controller->action->id
             [
                 'label' => 'Работа с тестами',
                 'items' => [
-                    ['label' => 'Создать тест', 'url' => ['/testing/test/create']],
                     ['label' => 'Список тестов', 'url' => ['/testing/test']],
                     ['label' => 'Список вопросов', 'url' => ['/testing/question']],
                     ['label' => 'Список ответов', 'url' => ['/testing/answer']],
@@ -77,6 +65,19 @@ if ((Yii::$app->controller->id == 'site') and (Yii::$app->controller->action->id
                 'url' => ['/user/user_homepage?id=' . Yii::$app->user->id],
                 'visible'=>Yii::$app->user->can('user')
             ],
+
+//            Yii::$app->user->isGuest ? (
+//                ['label' => 'Личный кабинет', 'url' => ['/site/login']]
+//            ) : (
+//                '<li>'
+//                . Html::beginForm(['/user/user_homepage?id=' . Yii::$app->user->id], 'post')
+//                . Html::submitButton(
+//                    'Страница (' . Yii::$app->user->identity->username . ')',
+//                    ['class' => 'btn btn-link logout']
+//                )
+//                . Html::endForm()
+//                . '</li>'
+//            ),
 
             Yii::$app->user->isGuest ? (
             ['label' => 'Войти', 'url' => ['/site/login']]
@@ -104,9 +105,11 @@ if ((Yii::$app->controller->id == 'site') and (Yii::$app->controller->action->id
     </div>
 </div>
 
-<footer class="footer";">
+<footer class="footer">
     <div class="container">
         <p class="pull-left">&copy; АФ ООО <b>"Газпромтранс"</b> <?= date('Y') ?></p>
+
+        <!--        <p class="pull-right">--><?//= Yii::powered() ?><!--</p>-->
     </div>
 </footer>
 

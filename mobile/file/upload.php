@@ -3,11 +3,13 @@
 /* @var $model File */
 /* @var $form ActiveForm */
 
+use app\assets\MobileAsset;
 use app\models\Category;
 use app\models\File;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+MobileAsset::register($this);
 ?>
 
 <?php $form = ActiveForm::begin(['options' => []]) ?>

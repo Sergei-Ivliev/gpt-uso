@@ -64,7 +64,7 @@ class SignupForm extends Model
         return [
             'username' => 'Логин',
             'password' => 'Пароль',
-            'special_cod' => 'Код разрешения регистрации',
+            'special_cod' => 'R.A.C',
             'first_name' => 'Имя',
             'last_name' => 'Фамилия',
             'third_name' => 'Отчество',
@@ -140,7 +140,7 @@ class SignupForm extends Model
     public function checkCod($attr) // special_cod
     {
         $start = $this->special_cod;
-        $end = 12345;
+        $end = 213131;
 
         if ($start && $end) {
             if ($end != $start) {

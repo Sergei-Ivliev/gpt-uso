@@ -10,6 +10,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
+
 class ResultController extends Controller
 {
     public function actionIndex()
@@ -28,7 +29,7 @@ class ResultController extends Controller
             ],
         ]);
 
-        return $this->render('index', [
+        return $this->render('@app/views/result/index', [
             'provider' => $provider,
         ]);
     }
@@ -40,7 +41,7 @@ class ResultController extends Controller
 
         // просматривать записи может только создатель или Администратор сайта
         if (Yii::$app->user->can('admin') || $item->user_id == Yii::$app->user->id) {
-            return $this->render('view', [
+            return $this->render('@app/views/result/view', [
                 'model' => $item,
             ]);
         } else {

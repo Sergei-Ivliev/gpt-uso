@@ -1,10 +1,14 @@
 <?php
 
-/* @var $this yii\web\View */
+///* @var $this yii\web\View */
 
 $this->title = 'УСОиТ';
 
-use yii\helpers\Html;; ?>
+use app\assets\MobileAsset;
+use yii\helpers\Html;
+
+MobileAsset::register($this);?>
+
 <div class="site-index">
 
     <div class="jumbotron">

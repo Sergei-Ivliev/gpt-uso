@@ -67,7 +67,7 @@ class File extends ActiveRecord
             [['title'], 'string'],
             [['number', 'category_id'], 'integer'],
             [['title'], 'string', 'min' => 5],
-            [['path'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, pdf'],
+            [['path'], 'file', 'skipOnEmpty' => false, 'extensions' => 'jpg, pdf, pptx, docx,'],
         ];
     }
 
