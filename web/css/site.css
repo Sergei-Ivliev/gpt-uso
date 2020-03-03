@@ -153,4 +153,10 @@ a.desc:after {
     font-size: 2.5em;
 }
 
+.test-box {
+    background-color: rgba(188, 220, 255, 0.52);
+    border-radius: 1em;
+    padding: 1em;
+}
+
 

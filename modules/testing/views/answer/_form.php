@@ -14,18 +14,15 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-<!--    --><?//= $form->field($model,'id_question')->dropdownList(
-//        ArrayHelper::map(Question::find()->select(['id','title'])->all(),'id','title')
-//    ); ?>
-
-
+    Tests_Update
     <?= $form->field($model, 'id_question',['inputOptions' => ['value' => $id_question]])->hiddenInput()->label(false) ?>
-
-<!--    --><?//= $form->field($model, 'id_test',['inputOptions' => ['value' => $ID_test]])->hiddenInput()->label(false) ?>
 
     <?= $form->field($model, 'text')->textarea(['rows' => 6]) ?>
 
-<!--    --><?//= $form->field($model, 'type')->dropDownList([ 'right' => 'правильный', 'wrong' => 'неправильный', ]) ?>
+    <?= $form->field($model, 'id_question',['inputOptions' => ['value' => $id_question]])->hiddenInput()->label(false) ?>
+
+    <?= $form->field($model, 'text')->textarea(['rows' => 6]) ?>
+
 
     <?= $form->field($model, 'type')->radioList(['right' => 'правильный' , 'wrong' => 'неправильный'], ['value' => 'wrong']) ?>
 

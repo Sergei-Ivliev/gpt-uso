@@ -2,7 +2,7 @@
 
 namespace app\modules\testing\models;
 
-use Yii;
+use app\models\Result;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
@@ -12,6 +12,10 @@ use yii\db\ActiveRecord;
  * @property integer $id
  * @property string $name
  * @property string $description
+ * @property integer $passed
+ * @property integer $total
+ * @property integer $closed
+ *
  *
  * @property QuestionsTests[] $questionsTests
  */
@@ -33,6 +37,7 @@ class Test extends ActiveRecord
         return [
             [['description'], 'string'],
             [['name'], 'string', 'max' => 500],
+            [['passed', 'total', 'closed'], 'integer'],
         ];
     }
 
@@ -45,6 +50,9 @@ class Test extends ActiveRecord
             'id' => 'ID',
             'name' => 'Название',
             'description' => 'Описание',
+            'passed' => 'Сдали',
+            'total' => 'Всего',
+            'closed' => 'Статус',
         ];
     }
 
@@ -55,4 +63,5 @@ class Test extends ActiveRecord
     {
         return $this->hasMany(QuestionsTests::class, ['id_test' => 'id']);
     }
+
 }
