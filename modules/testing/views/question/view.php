@@ -23,6 +23,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
+        <?= Html::a('Продолжить создание теста',
+            ['answer/create', 'ID_question' => $model->id, 'title' => $model->title],
+            ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= DetailView::widget([

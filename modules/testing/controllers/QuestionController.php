@@ -135,7 +135,7 @@ class QuestionController extends Controller
 
     protected function saveQuestionsTests($model)
     {
-        if (($tests=Yii::$app->request->post('Test')['id']) && is_array($tests))
+        if (($tests=Yii::$app->request->post('id_test')) && is_array($tests))
         {
             if (count($tests))
                 QuestionsTests::deleteAll(

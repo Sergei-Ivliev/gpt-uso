@@ -14,16 +14,14 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model,'id_question')->dropdownList(
-        ArrayHelper::map(Question::find()->select(['id','title'])->all(),'id','title')
-    ); ?>
+    <?= $form->field($model, 'id_question',['inputOptions' => ['value' => $id_question]])->hiddenInput()->label(false) ?>
 
     <?= $form->field($model, 'text')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'type')->dropDownList([ 'right' => 'правильный', 'wrong' => 'неправильный', ]) ?>
+    <?= $form->field($model, 'type')->radioList(['right' => 'правильный' , 'wrong' => 'неправильный'], ['value' => 'wrong']) ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Создать' : 'Изменить', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Создать' : 'Изменить',  [['id_test' => '$ID_test'],'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

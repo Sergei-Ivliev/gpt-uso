@@ -9,6 +9,7 @@ $this->title = 'Создание пользователя';
 
 $this->params['breadcrumbs'][] = ['label' => 'Пользователи', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="user-create">
 
