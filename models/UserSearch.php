@@ -16,8 +16,10 @@ class UserSearch extends User
      */
     public function rules()
     {
-        return [   /**  Удалена из поиска форма Должность, т к поле integer а записи выводит string  **/
+        return [  
+              /**  Удалена из поиска форма Должность, т к поле integer а записи выводит string  **/
 //            [['id', 'created_at', 'updated_at', 'telny_number', 'position_id'], 'integer'],
+          
             [['id', 'created_at', 'updated_at', 'telny_number'], 'integer'],
             [['username', 'password_hash', 'auth_key', 'access_token', 'first_name', 'last_name', 'third_name', 'date_birth', 'date_receipt', 'status'], 'safe'],
         ];

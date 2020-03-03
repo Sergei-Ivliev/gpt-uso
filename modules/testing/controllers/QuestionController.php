@@ -135,6 +135,8 @@ class QuestionController extends Controller
 
     protected function saveQuestionsTests($model)
     {
+    Tests_Update
+
         if (($tests=Yii::$app->request->post('id_test')) && is_array($tests))
         {
             if (count($tests))

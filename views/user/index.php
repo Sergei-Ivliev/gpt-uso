@@ -30,6 +30,8 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Зарегистрировать нового работника', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
+<!--    --><?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+
 <?= GridView::widget([
     'dataProvider' => $dataProvider,
     'filterModel' => $searchModel,
