@@ -5,6 +5,7 @@ namespace app\modules\testing\models;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "questions".
@@ -16,7 +17,7 @@ use yii\db\ActiveQuery;
  * @property Answer[] $answers
  * @property QuestionsTests[] $questionsTests
  */
-class Question extends \yii\db\ActiveRecord
+class Question extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -73,4 +74,5 @@ class Question extends \yii\db\ActiveRecord
         return $this->hasMany(Test::class, ['id' => 'id_test'])
             ->viaTable('questions_tests', ['id_question' => 'id']);
     }
+
 }
