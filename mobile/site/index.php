@@ -43,7 +43,7 @@ MobileAsset::register($this);?>
                 а также, после ознакомления прилегающей информации, сможет пройти тестирование</p>
 
                 <p>
-                    <?= Html::a('Перейти', ['temp'], ['class' => 'btn btn-primary']) ?>
+                    <?= Html::a('Перейти', ['/briefing/index'], ['class' => 'btn btn-primary']) ?>
                 </p>
             </div>
             <div class="col-lg-3">
