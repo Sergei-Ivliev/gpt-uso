@@ -60,7 +60,7 @@ class User extends ActiveRecord implements IdentityInterface
             'date_birth' => 'Дата рождения',
             'date_receipt' => 'Дата устройства',
             'status' => 'активность',
-
+            'email' => 'Электронная почта',
         ];
     }
 
@@ -75,7 +75,7 @@ class User extends ActiveRecord implements IdentityInterface
             [['username'], 'unique', 'targetClass' => User::class, 'targetAttribute' => 'username'],
             [['username', 'first_name', 'last_name', 'third_name', 'telny_number',
                 'position_id', 'date_birth', 'date_receipt',], 'required'],
-            [['username', 'first_name', 'last_name', 'third_name', 'position_id'], 'string'],
+            [['username', 'first_name', 'last_name', 'third_name', 'position_id', 'email'], 'string'],
             [['telny_number'], 'unique', 'targetClass' => User::class, 'targetAttribute' => 'telny_number'],
             [['username'], 'string', 'min' => 3],
             ['date_receipt', 'validateDate'],
@@ -142,5 +142,10 @@ class User extends ActiveRecord implements IdentityInterface
                 $this->addError($attr, 'Некорректный формат даты');
             }
         }
+    }
+
+    public function getFullName()
+    {
+        return $this->last_name . ' ' . $this->first_name;
     }
 }

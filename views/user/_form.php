@@ -73,6 +73,7 @@ echo $form->field($model, 'position_id')->dropDownList($items, $params);
             <?= $form->field($model, 'first_name')->textInput() ?>
             <?= $form->field($model, 'last_name')->textInput() ?>
             <?= $form->field($model, 'third_name')->textInput() ?>
+            <?= $form->field($model, 'email')->textInput() ?>
         </div>
         <div class="col-lg-6">
             <?= $form->field($model, 'telny_number')->textInput() ?>
