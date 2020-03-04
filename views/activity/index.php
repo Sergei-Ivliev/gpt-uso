@@ -66,7 +66,7 @@ if (Yii::$app->user->can('admin')) {
 
 ?>
 
-    <div class="row" style="margin-top: -50px;">
+    <div class="site-about" style="margin-top: -50px;margin-bottom: 30px;">
         <h1>Список событий</h1>
         <?=
         Yii::$app->user->can('admin') ? (
