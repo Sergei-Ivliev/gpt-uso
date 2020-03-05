@@ -2,11 +2,13 @@
 
 namespace app\modules\testing\controllers;
 
+use phpDocumentor\Reflection\Types\Void_;
 use Throwable;
 use Yii;
 use app\modules\testing\models\Answer;
 use app\modules\testing\models\AnswerSearch;
 use yii\db\StaleObjectException;
+use yii\helpers\Html;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -69,7 +71,8 @@ class AnswerController extends Controller
         $model = new Answer();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            Yii::$app->session->setFlash('success', 'Вариант ответа создан.');
+            return $this->redirect(['answer/create', 'ID_question' => $model->id_question]);
         } else {
             return $this->render('create', [
                 'model' => $model,

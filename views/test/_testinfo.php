@@ -1,5 +1,5 @@
 <?php
-header( "refresh:5;url=/" );
+header( "refresh:3;url=/" );
 ?>
 <div class="container">
     <div class="jumbotron" style="background: rgba(0,204,255,0.5)">
