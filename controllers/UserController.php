@@ -55,18 +55,6 @@ class UserController extends Controller
             'dataProvider' => $dataProvider,
 
         ]);
-//        $query = User::find();
-//        $provider = new ActiveDataProvider([
-//            'query' => $query,
-//            'pagination' => [
-////                'validatePage' => false,
-//                'pageSize' => 10,
-//            ],
-//        ]);
-//
-//        return $this->render('index', [
-//            'provider' => $provider,
-//        ]);
     }
 
     public function actionUser_homepage()
