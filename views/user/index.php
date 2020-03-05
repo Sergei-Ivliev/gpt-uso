@@ -21,6 +21,11 @@ use yii\widgets\ActiveForm;
 /* @var $searchModel app\models\UserSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
+/* @var $this yii\web\View */
+/* @var $searchModel app\models\UserSearch */
+/* @var $dataProvider yii\data\ActiveDataProvider */
+
+
 $this->title = 'Список работников';
 //$this->params['breadcrumbs'][] = $this->title;
 ?>

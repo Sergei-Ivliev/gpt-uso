@@ -109,7 +109,6 @@ if ((Yii::$app->controller->id == 'site') and (Yii::$app->controller->action->id
 <footer class="footer";">
     <div class="container">
         <p class="pull-left">&copy; АФ ООО <b>"Газпромтранс"</b> <?= date('Y') ?></p>
-
     </div>
 </footer>
 
