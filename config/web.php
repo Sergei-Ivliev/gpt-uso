@@ -9,7 +9,7 @@ $config = [
     'language'=>'ru',
     'sourceLanguage'=>'ru',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'bootstrap' => ['appComponent'],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
@@ -63,6 +63,13 @@ $config = [
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
         ],
+        'mobileDetect' => [
+            'class' => '\skeeks\yii2\mobiledetect\MobileDetect'
+        ],
+        'appComponent' =>
+            [
+                'class' => app\components\AppComponent::class
+            ],
     ],
     'params' => $params,
 ];

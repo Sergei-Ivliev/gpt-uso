@@ -5,6 +5,7 @@ namespace app\controllers;
 
 
 use app\models\Activity;
+use app\models\User;
 use Throwable;
 use Yii;
 use yii\caching\DbDependency;
@@ -61,7 +62,7 @@ class ActivityController extends Controller
     {
         $query = Activity::find();
 
-        // добавим условие на выборку по пользователю, если это не менеджер
+        // добавим условие на выборку по пользователю, если это не админ
         if (!Yii::$app->user->can('user')) {
             $query->andWhere(['user_id' => Yii::$app->user->id]);
         }
@@ -69,11 +70,12 @@ class ActivityController extends Controller
         $provider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => [
-                'validatePage' => false,
+//                'validatePage' => false,
+                'pageSize' => 5,
             ],
         ]);
 
-        return $this->render('index', [
+        return $this->render('@app/views/activity/index', [
             'provider' => $provider,
         ]);
     }
@@ -111,7 +113,7 @@ class ActivityController extends Controller
 //        }
 
         // просматривать события может любой авторизоанный пользователь
-        return $this->render('view', [
+        return $this->render('@app/views/activity/view', [
             'model' => $item,
         ]);
     }
@@ -138,7 +140,7 @@ class ActivityController extends Controller
                 }
             }
 
-            return $this->render('edit', [
+            return $this->render('@app/views/activity/edit', [
                 'model' => $item,
             ]);
         } else {
@@ -160,7 +162,7 @@ class ActivityController extends Controller
     {
         $item = Activity::findOne($id);
 
-        // удалять записи может только создатель или менеджер
+        // удалять записи может только admin
         if ($item->user_id == Yii::$app->user->id || Yii::$app->user->can('admin')) {
             $item->delete();
 

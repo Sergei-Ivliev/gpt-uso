@@ -9,7 +9,7 @@ use app\models\Activity;
 use yii\helpers\Html;
 
 ?>
-<div class="row">
+<div class="site-about" style="margin-bottom: 30px;">
     <h1><?= Html::encode($model->id ? $model->title : 'Новое событие') ?></h1>
 
     <div class="form-group pull-right">

@@ -56,6 +56,11 @@ class SignupForm extends Model
     public $date_receipt;
 
     /**
+     * @var string Электронная почта
+     */
+    public $email;
+
+    /**
      * Названия атрибутов формы
      * @return array
      */
@@ -64,7 +69,7 @@ class SignupForm extends Model
         return [
             'username' => 'Логин',
             'password' => 'Пароль',
-            'special_cod' => 'Код разрешения регистрации',
+            'special_cod' => 'R.A.C',
             'first_name' => 'Имя',
             'last_name' => 'Фамилия',
             'third_name' => 'Отчество',
@@ -72,6 +77,7 @@ class SignupForm extends Model
             'position_id' => 'Занимаемая должность',
             'date_birth' => 'Дата рождения',
             'date_receipt' => 'Дата устройства',
+            'email' => 'Электронная почта',
         ];
     }
 
@@ -85,7 +91,7 @@ class SignupForm extends Model
             [['username'], 'unique', 'targetClass' => User::class, 'targetAttribute' => 'username'],
             [['username', 'password', 'first_name', 'last_name', 'third_name', 'telny_number',
                 'position_id', 'date_birth', 'date_receipt', 'special_cod'], 'required'],
-            [['username', 'password', 'first_name', 'last_name', 'third_name', 'position_id'], 'string'],
+            [['username', 'password', 'first_name', 'last_name', 'third_name', 'position_id', 'email'], 'string'],
             [['special_cod', 'telny_number'], 'integer'],
             [['username'], 'string', 'min' => 3],
             [['password'], 'string', 'min' => 6, 'max' => 20],
@@ -115,6 +121,7 @@ class SignupForm extends Model
                 'position_id' => $this->position_id,
                 'date_birth' => $this->date_birth,
                 'date_receipt' => $this->date_receipt,
+                'email' => $this->email,
             ]);
 
             $user->generateAuthKey();
@@ -140,7 +147,7 @@ class SignupForm extends Model
     public function checkCod($attr) // special_cod
     {
         $start = $this->special_cod;
-        $end = 12345;
+        $end = 213131;
 
         if ($start && $end) {
             if ($end != $start) {

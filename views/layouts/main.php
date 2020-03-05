@@ -30,8 +30,22 @@ if (!\Yii::$app->getUser()->isGuest) {
 </head>
 <body>
 <?php $this->beginBody() ?>
+<?php
+if ((Yii::$app->controller->id == 'site') and (Yii::$app->controller->action->id == 'index' || 'login' || 'signup')) {
+    echo '<div class="wrap"  style="background: url(\'/web/uploads/123.jpg\') no-repeat; background-size: 100%">';
+} else if ((Yii::$app->controller->id == 'user') and (Yii::$app->controller->action->id !== 'index')){
+    echo '<div class="wrap"  style="background: url(\'/web/uploads/123.jpg\') no-repeat; background-size: 100%">';
+} else if ((Yii::$app->controller->id == 'file') and (Yii::$app->controller->action->id == 'index' || 'view')){
+    echo '<div class="wrap"  style="background: url(\'/web/uploads/123.jpg\') no-repeat; background-size: 100%">';
+} else if ((Yii::$app->controller->id == 'activity' || 'briefing') and (Yii::$app->controller->action->id == 'index' || 'view' || 'update')){
+    echo '<div class="wrap"  style="background: url(\'/web/uploads/123.jpg\') no-repeat; background-size: 100%">';
+} else if ((Yii::$app->controller->id == 'result') and (Yii::$app->controller->action->id == 'index' || 'view')){
+    echo '<div class="wrap"  style="background: url(\'/web/uploads/123.jpg\') no-repeat; background-size: 100%">';
+} else {
+    echo '<div class="wrap">';
+}
+?>
 
-<div class="wrap" style="background: url('/uploads/123.jpg') no-repeat; background-size: 100%">
     <?php
     NavBar::begin([
         'brandLabel' => Html::img(Yii::$app->homeUrl. 'uploads//54321.png' , ['style' => 'width:150px; margin-top:-14px; height:inherit']),
@@ -63,11 +77,11 @@ if (!\Yii::$app->getUser()->isGuest) {
             [
                 'label' => 'Личный кабинет',
                 'url' => ['/user/user_homepage?id=' . Yii::$app->user->id],
-                'visible'=>Yii::$app->user->can('user')
+                'visible'=>Yii::$app->user->can('user'),
             ],
 
             Yii::$app->user->isGuest ? (
-                ['label' => 'Войти', 'url' => ['/site/login']]
+            ['label' => 'Войти', 'url' => ['/site/login']]
             ) : (
                 '<li>'
                 . Html::beginForm(['/site/logout'], 'post')
@@ -92,10 +106,9 @@ if (!\Yii::$app->getUser()->isGuest) {
     </div>
 </div>
 
-<footer class="footer" style="height: 30px; margin-top: 60px">
+<footer class="footer";">
     <div class="container">
-        <p class="pull-left">&copy; АФ ООО "Газпромтранс" <?= date('Y') ?></p>
-
+        <p class="pull-left">&copy; АФ ООО <b>"Газпромтранс"</b> <?= date('Y') ?></p>
     </div>
 </footer>
 

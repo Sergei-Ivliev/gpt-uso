@@ -1,6 +1,7 @@
 <?php
 /* @var $this yii\web\View */
 /* @var $model File */
+/* @var $form ActiveForm */
 
 use app\models\Category;
 use app\models\File;
