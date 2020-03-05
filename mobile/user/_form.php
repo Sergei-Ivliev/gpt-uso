@@ -40,6 +40,8 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'date_birth')->textInput(['type' => 'date']) ?>
         <?= $form->field($model, 'date_receipt')->textInput(['type' => 'date']) ?>
 
+        <?= $form->field($model, 'email')->textInput() ?>
+
         <div class="form-group">
         <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
         </div>

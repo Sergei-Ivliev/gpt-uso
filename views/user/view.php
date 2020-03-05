@@ -49,6 +49,7 @@ YiiAsset::register($this);
             ],
             'date_birth:date',
             'date_receipt:date',
+            'email',
             'created_at:datetime',
             'updated_at:datetime',
         ],

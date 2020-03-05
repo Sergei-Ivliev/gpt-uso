@@ -2,18 +2,18 @@
 
 /**
  * @var $this yii\web\View
- * @var $model Activity
+ * @var $model Briefing
  */
 
-use app\models\Activity;
+use app\models\Briefing;
 use yii\helpers\Html;
 
 ?>
 <div class="site-about" style="margin-bottom: 30px;">
-    <h1><?= Html::encode($model->id ? $model->title : 'Новое событие') ?></h1>
+    <h1><?= Html::encode($model->id ? $model->title : 'Добавить событие') ?></h1>
 
     <div class="form-group pull-right">
-        <?= Html::a('Отмена', ['activity/index'], ['class' => 'btn btn-info']) ?>
+        <?= Html::a('Отмена', ['briefing/index'], ['class' => 'btn btn-info']) ?>
     </div>
 </div>
 

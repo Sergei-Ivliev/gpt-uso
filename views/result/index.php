@@ -26,7 +26,7 @@ $columns = [
         'label' => 'Кто проходил',
         'attribute' => 'user_id', // авто-подключение зависимостей
         'value' => function (Result $model) {
-            return $model->user->last_name;
+            return $model->user->getFullName();
         }
         // $model->user->last_name
     ],

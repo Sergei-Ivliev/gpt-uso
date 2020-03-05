@@ -5,6 +5,7 @@ namespace app\controllers;
 
 
 use app\models\Activity;
+use app\models\User;
 use Throwable;
 use Yii;
 use yii\caching\DbDependency;
@@ -61,7 +62,7 @@ class ActivityController extends Controller
     {
         $query = Activity::find();
 
-        // добавим условие на выборку по пользователю, если это не менеджер
+        // добавим условие на выборку по пользователю, если это не админ
         if (!Yii::$app->user->can('user')) {
             $query->andWhere(['user_id' => Yii::$app->user->id]);
         }
@@ -161,7 +162,7 @@ class ActivityController extends Controller
     {
         $item = Activity::findOne($id);
 
-        // удалять записи может только создатель или менеджер
+        // удалять записи может только admin
         if ($item->user_id == Yii::$app->user->id || Yii::$app->user->can('admin')) {
             $item->delete();
 

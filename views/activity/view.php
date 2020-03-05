@@ -10,7 +10,7 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 ?>
-    <div class="row">
+    <div class="site-about">
         <h1>Просмотр события</h1>
 
         <div class="form-group pull-right">

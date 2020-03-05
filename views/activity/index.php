@@ -66,7 +66,7 @@ if (Yii::$app->user->can('admin')) {
 
 ?>
 
-    <div class="row" style="margin-top: -50px;">
+    <div class="site-about" style="margin-top: -50px;margin-bottom: 30px;">
         <h1>Список событий</h1>
         <?=
         Yii::$app->user->can('admin') ? (
@@ -92,12 +92,12 @@ if (Yii::$app->user->can('admin')) {
 
             // the item contains both the image and the caption
             [
-                'content' => '<img src="/uploads/Gazpromtrans.jpg" alt="" style="width: 670px; height: 265px">',
+                'content' => '<img src="/web/uploads/Gazpromtrans.jpg" alt="" style="width: 670px; height: 265px">',
                 'caption' => '<a style="background: #2f55df;border: 1px solid whitesmoke;display: inline-block;margin-bottom: 7px;padding: 5px 15px;text-decoration: none;color: #fefff9;" href="https://trans.gazprom.ru/" target="_blank">Новости Газпромтранса</a>',
                 'options' => ['class' => 'slide'],
             ],
             [
-                'content' => '<img src="/uploads/Gazprom.jpg" alt="" style="width: 670px; height: 265px">',
+                'content' => '<img src="/web/uploads/Gazprom.jpg" alt="" style="width: 670px; height: 265px">',
                 'caption' => '<a style="background: #2f55df;border: 1px solid whitesmoke;display: inline-block;margin-bottom: 7px;padding: 5px 15px;text-decoration: none;color: #fefff9;" href="https://www.gazprom.ru/" target="_blank">Официальный сайт</a>',
                 'options' => ['class' => 'slide'],
             ],
