@@ -86,7 +86,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        return $this->render('@app/views/site/index');
     }
 
     /**
@@ -106,7 +106,7 @@ class SiteController extends Controller
         }
 
         $model->password = '';
-        return $this->render('login', [
+        return $this->render('@app/views/site/login', [
             'model' => $model,
         ]);
     }
@@ -123,7 +123,7 @@ class SiteController extends Controller
             return $this->goHome();
         }
 
-        return $this->render('signup', [
+        return $this->render('@app/views/site/signup', [
             'model' => $model,
         ]);
     }
@@ -143,7 +143,7 @@ class SiteController extends Controller
 
     public function actionTemp()
     {
-        return $this->render('temp');
+        return $this->render('@app/views/site/temp');
     }
 
 }

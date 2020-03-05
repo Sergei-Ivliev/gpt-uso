@@ -60,7 +60,7 @@ class User extends ActiveRecord implements IdentityInterface
             'date_birth' => 'Дата рождения',
             'date_receipt' => 'Дата устройства',
             'status' => 'активность',
-
+            'email' => 'Электронная почта',
         ];
     }
 
@@ -142,5 +142,10 @@ class User extends ActiveRecord implements IdentityInterface
                 $this->addError($attr, 'Некорректный формат даты');
             }
         }
+    }
+
+    public function getFullName()
+    {
+        return $this->last_name . ' ' . $this->first_name;
     }
 }

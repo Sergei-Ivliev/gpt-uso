@@ -17,14 +17,29 @@ class FileController extends Controller
     public function behaviors()
     {
         return [
+//            'access' => [
+//                // доступ только для админов
+//                'class' => AccessControl::class,
+//                'only' => ['upload', 'update', 'delete'],
+//                'rules' => [
+//                    [
+//                        'allow' => true,
+//                        'roles' => ['admin'],
+//                    ],
+//                ],
+//            ],
             'access' => [
-                // доступ только для админов
                 'class' => AccessControl::class,
-                'only' => ['upload', 'update', 'delete'],
                 'rules' => [
                     [
                         'allow' => true,
+                        'actions' => ['index', 'view', 'update', 'upload', 'delete'],
                         'roles' => ['admin'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['index', 'view',],
+                        'roles' => ['user'],
                     ],
                 ],
             ],
@@ -42,7 +57,7 @@ class FileController extends Controller
             ],
         ]);
 
-        return $this->render('index', [
+        return $this->render('@app/views/file/index', [
             'provider' => $provider,
         ]);
     }
@@ -52,7 +67,7 @@ class FileController extends Controller
         $item = File::findOne($id);
 
         // просматривать файлы может любой авторизоанный пользователь
-        return $this->render('view', [
+        return $this->render('@app/views/file/view', [
             'model' => $item,
         ]);
     }
@@ -67,11 +82,32 @@ class FileController extends Controller
             if ($model->load(Yii::$app->request->post()) && $model->validate()) {
                 Yii::$app->session->setFlash('success', 'Изображение загружено');
                 $model->save();
-                return $this->render('view', ['model' => $model]);
+                return $this->render('@app/views/file/view', ['model' => $model]);
             }
         }
-        return $this->render('upload', ['model' => $model]);
+        return $this->render('@app/views/file/upload', ['model' => $model]);
     }
+
+    public function actionUpdate(int $id = null)
+    {
+        $item = $id ? File::findOne($id) : new File;
+
+        // обновлять записи может только создатель
+        if (Yii::$app->user->can('admin')) {
+            if (Yii::$app->request->isPost) {
+                $item->path = UploadedFile::getInstance($item, 'path');
+                if ($item->load(Yii::$app->request->post()) && $item->validate()) {
+                    Yii::$app->session->setFlash('success', 'Данные успешно изменены');
+                    $item->save();
+                    return $this->render('@app/views/file/view', ['model' => $item]);
+                }
+            }
+            return $this->render('@app/views/file/upload', ['model' => $item]);
+        } else {
+            throw new NotFoundHttpException();
+        }
+    }
+
 
     public function actionDelete(int $id)
     {
