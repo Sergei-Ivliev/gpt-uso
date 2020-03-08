@@ -53,7 +53,8 @@ class FileController extends Controller
         $provider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => [
-                'validatePage' => false,
+                'validatePage' => true,
+                'pageSize' => 10,
             ],
         ]);
 

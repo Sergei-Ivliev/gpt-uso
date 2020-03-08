@@ -26,6 +26,7 @@ class ResultController extends Controller
             'query' => $query,
             'pagination' => [
                 'validatePage' => false,
+                'pageSize' => 10,
             ],
         ]);
 

@@ -31,15 +31,17 @@ if (!\Yii::$app->getUser()->isGuest) {
 <body>
 <?php $this->beginBody() ?>
 <?php
-if ((Yii::$app->controller->id == 'site') and (Yii::$app->controller->action->id == 'index' || 'login' || 'signup')) {
+if (Yii::$app->controller->id == 'site') {
     echo '<div class="wrap"  style="background: url(\'/web/uploads/123.jpg\') no-repeat; background-size: 100%">';
-} else if ((Yii::$app->controller->id == 'user') and (Yii::$app->controller->action->id !== 'index')){
+} else if ((Yii::$app->controller->id == 'user') && (Yii::$app->controller->action->id !== 'index')){
     echo '<div class="wrap"  style="background: url(\'/web/uploads/123.jpg\') no-repeat; background-size: 100%">';
-} else if ((Yii::$app->controller->id == 'file') and (Yii::$app->controller->action->id == 'index' || 'view')){
+} else if ((Yii::$app->controller->id == 'file') && (Yii::$app->controller->action->id == 'index' || 'view')){
     echo '<div class="wrap"  style="background: url(\'/web/uploads/123.jpg\') no-repeat; background-size: 100%">';
-} else if ((Yii::$app->controller->id == 'activity' || 'briefing') and (Yii::$app->controller->action->id == 'index' || 'view' || 'update')){
+} else if ((Yii::$app->controller->id == 'activity')){
     echo '<div class="wrap"  style="background: url(\'/web/uploads/123.jpg\') no-repeat; background-size: 100%">';
-} else if ((Yii::$app->controller->id == 'result') and (Yii::$app->controller->action->id == 'index' || 'view')){
+} else if ((Yii::$app->controller->id == 'result')){
+    echo '<div class="wrap"  style="background: url(\'/web/uploads/123.jpg\') no-repeat; background-size: 100%">';
+} else if ((Yii::$app->controller->id == 'briefing')){
     echo '<div class="wrap"  style="background: url(\'/web/uploads/123.jpg\') no-repeat; background-size: 100%">';
 } else {
     echo '<div class="wrap">';
