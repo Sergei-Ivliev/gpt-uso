@@ -30,6 +30,9 @@ use yii\db\Exception;
  */
 class Activity extends ActiveRecord
 {
+
+    public $info_active = [];
+
     public function behaviors()
     {
         return [TimestampBehavior::class,];
@@ -133,7 +136,7 @@ class Activity extends ActiveRecord
             $sql1 = \Yii::$app->db->createCommand("SELECT `status` FROM `info_action` WHERE `id_user` = {$value} AND `id_action` = {$action_ID}")->query();
             foreach ($sql1 as $val => $item) {
                 if ($item['status'] == 1) {
-                  break;
+                    break;
                 } else {
                     $sql2 = "UPDATE `users` SET `i_act` = `i_act` -1 WHERE `id` = {$value}";
                     \Yii::$app->db->createCommand($sql2)->execute();
@@ -163,6 +166,21 @@ class Activity extends ActiveRecord
                 \Yii::$app->db->createCommand($sql2)->execute();
             }
         }
+    }
+
+    public function getActualActivities($user_ID)
+    {
+        $sql = "SELECT activities.id, activities.title 
+                FROM `activities` 
+                LEFT JOIN `info_action` 
+                ON activities.id = info_action.id_action
+                WHERE info_action.id_user = {$user_ID} AND info_action.status = ''";
+        $query = \Yii::$app->db->createCommand($sql)->queryAll();
+
+        foreach ($query as $item => $value) {
+            $this->info_active[] = $value;
+        }
+        return $this->info_active;
     }
 
 }

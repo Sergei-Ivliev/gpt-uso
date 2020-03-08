@@ -27,6 +27,7 @@ use yii\web\UploadedFile;
  */
 class File extends ActiveRecord
 {
+    public $info_docs = [];
 
  public function behaviors()
   {
@@ -129,6 +130,21 @@ class File extends ActiveRecord
                 \Yii::$app->db->createCommand($sql2)->execute();
             }
         }
+    }
+
+    public function getActualDocs($user_ID)
+    {
+        $sql = "SELECT files.id, files.title 
+                FROM `files` 
+                LEFT JOIN `info_doc` 
+                ON files.id = info_doc.id_doc
+                WHERE info_doc.id_user = {$user_ID} AND info_doc.status = ''";
+        $query = \Yii::$app->db->createCommand($sql)->queryAll();
+
+        foreach ($query as $item => $value) {
+            $this->info_docs[] = $value;
+        }
+        return $this->info_docs;
     }
 
 

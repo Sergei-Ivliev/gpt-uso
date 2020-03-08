@@ -179,4 +179,9 @@ class User extends ActiveRecord implements IdentityInterface
         }
         self::$totalUserID = $allID;
     }
+
+    public function insertEachCount($user_ID) {
+
+    }
+
 }

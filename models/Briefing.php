@@ -27,6 +27,8 @@ use yii\db\Exception;
  */
 class Briefing extends ActiveRecord
 {
+    public $info_brief = [];
+
     public function behaviors()
     {
         return [TimestampBehavior::class,];
@@ -130,6 +132,21 @@ class Briefing extends ActiveRecord
                 \Yii::$app->db->createCommand($sql2)->execute();
             }
         }
+    }
+
+    public function getActualBriefings($user_ID)
+    {
+        $sql = "SELECT briefings.id, briefings.title 
+                FROM `briefings` 
+                LEFT JOIN `info_brief` 
+                ON briefings.id = info_brief.id_brief
+                WHERE info_brief.id_user = {$user_ID} AND info_brief.status = ''";
+        $query = \Yii::$app->db->createCommand($sql)->queryAll();
+
+        foreach ($query as $item => $value) {
+            $this->info_brief[] = $value;
+        }
+        return $this->info_brief;
     }
 
 }
