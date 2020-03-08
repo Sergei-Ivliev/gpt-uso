@@ -6,6 +6,7 @@ namespace app\models;
 
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\db\Exception;
 
 /**
  * Class Briefing
@@ -76,4 +77,59 @@ class Briefing extends ActiveRecord
     {
         return $this->hasOne(Position::class, ['id' => 'position_id']);
     }
+
+    /** При создании инструктажа */
+    public function infoBriefInsert($brief_ID)
+    {
+        foreach (User::$totalUserID as $value) {
+            $sql = "INSERT INTO `info_brief` (`id_user`, `id_brief`) VALUES ({$value},{$brief_ID})";
+            \Yii::$app->db->createCommand($sql)->execute();
+            $sql2 = "UPDATE `users` SET `i_instr` = `i_instr` +1 WHERE `id` = {$value}";
+            \Yii::$app->db->createCommand($sql2)->execute();
+        };
+    }
+
+    /** При удалении инструктажа Администратором
+     * @param $brief_ID
+     * @throws Exception
+     */
+    public function infoBriefDelete($brief_ID)
+    {
+        (new User)->findAllUsersID();
+        foreach (User::$totalUserID as $value) {
+            $sql1 = \Yii::$app->db->createCommand("SELECT `status` FROM `info_brief` WHERE `id_user` = {$value} AND `id_brief` = {$brief_ID}")->query();
+            foreach ($sql1 as $val => $item) {
+                if ($item['status'] == 1) {
+                    break;
+                } else {
+                    $sql2 = "UPDATE `users` SET `i_instr` = `i_instr` -1 WHERE `id` = {$value}";
+                    \Yii::$app->db->createCommand($sql2)->execute();
+                }
+            }
+        }
+        $sql3 = "DELETE FROM `info_brief` WHERE id_brief = {$brief_ID}";
+        \Yii::$app->db->createCommand($sql3)->execute();
+    }
+
+    /** Действия при ознакомлении с инструктажём
+     * @param $brief_ID
+     * @throws Exception
+     */
+    public static function markBriefRead($brief_ID)
+    {
+        $user_ID = \Yii::$app->user->id;
+
+        $sql = \Yii::$app->db->createCommand("SELECT `status` FROM `info_brief` WHERE `id_user` = {$user_ID} AND `id_brief` = {$brief_ID}")->query();
+
+        foreach ($sql as $value => $item) {
+            if ($item['status'] != 1) {
+                $sql1 = "UPDATE `info_brief` SET `status` = 1 WHERE `id_user` = {$user_ID} AND `id_brief` = {$brief_ID}";
+                \Yii::$app->db->createCommand($sql1)->execute();
+
+                $sql2 = "UPDATE `users` SET `i_instr` = `i_instr` -1 WHERE `id` = {$user_ID}";
+                \Yii::$app->db->createCommand($sql2)->execute();
+            }
+        }
+    }
+
 }

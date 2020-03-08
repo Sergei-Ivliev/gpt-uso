@@ -1,10 +1,9 @@
 <?php
 
-
 namespace app\controllers;
 
-
 use app\models\File;
+use app\models\User;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
@@ -53,8 +52,7 @@ class FileController extends Controller
         $provider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => [
-                'validatePage' => true,
-                'pageSize' => 10,
+                'validatePage' => false,
             ],
         ]);
 
@@ -83,6 +81,8 @@ class FileController extends Controller
             if ($model->load(Yii::$app->request->post()) && $model->validate()) {
                 Yii::$app->session->setFlash('success', 'Изображение загружено');
                 $model->save();
+                (new User)->findAllUsersID();
+                (new File)->infoDocInsert($model->id);
                 return $this->render('@app/views/file/view', ['model' => $model]);
             }
         }
@@ -100,6 +100,8 @@ class FileController extends Controller
                 if ($item->load(Yii::$app->request->post()) && $item->validate()) {
                     Yii::$app->session->setFlash('success', 'Данные успешно изменены');
                     $item->save();
+                    (new User)->findAllUsersID();
+                    (new File)->infoDocInsert($item->id);
                     return $this->render('@app/views/file/view', ['model' => $item]);
                 }
             }
@@ -116,6 +118,7 @@ class FileController extends Controller
 
         // удалять записи может только админ
         if (Yii::$app->user->can('admin')) {
+            (new File)->infoDocDelete($id);
             $item->delete();
 
             return $this->redirect(['file/index']);

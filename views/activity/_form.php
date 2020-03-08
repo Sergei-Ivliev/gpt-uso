@@ -8,6 +8,7 @@ use yii\widgets\ActiveForm;
  * @var $model app\models\Activity
  * @var $form ActiveForm
  */
+
 ?>
 <div class="activity-form">
     <?php $form = ActiveForm::begin(); ?>

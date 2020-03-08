@@ -75,14 +75,14 @@ if (Yii::$app->user->can('admin')) {
         Html::tag('p', Html::encode('Для просмотра подробного описания нажмите иконку в виде глаза'))
         )
         ?>
-    </div>
+    </div><br>
 
 <?= GridView::widget([
     'dataProvider' => $provider, // $provider->getModels() [....]
     'columns' => $columns,
 ]) ?>
 
-<div class="site-about" style="margin-bottom: 18px; margin-top: -30px;">
+<div class="site-about" style="margin-bottom: 18px;">
     <h1>Новостной блок</h1>
 </div>
 

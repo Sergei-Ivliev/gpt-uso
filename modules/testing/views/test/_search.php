@@ -15,6 +15,14 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
+<!--    Дублирующая форма поиска-->
+
+<!--    --><?//= $form->field($model, 'id') ?>
+<!---->
+<!--    --><?//= $form->field($model, 'name') ?>
+<!---->
+<!--    --><?//= $form->field($model, 'description') ?>
+
     <?= $form->field($model, 'closed')
         ->radioList([
             '0'=>'Активные тесты',
@@ -33,6 +41,8 @@ use yii\widgets\ActiveForm;
 
     <div class="form-group" style="margin-bottom: 2em">
         <?= Html::submitButton('Найти', ['class' => 'btn btn-primary']) . '&nbsp;&nbsp;'?>
+<!--        Не нужна без большой формы поиска-->
+<!--        --><?//= Html::resetButton('Сбросить', ['class' => 'btn btn-default']) . '&nbsp;&nbsp;' ?>
         <?= Html::a('Создать тест', ['create'], ['class' => 'btn btn-success']) ?>
     </div>
 

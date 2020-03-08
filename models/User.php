@@ -29,6 +29,9 @@ use yii\base\Exception;
  * @property int $date_birth
  * @property int $date_receipt
  * @property string $status
+ * @property int $i_act
+ * @property int $i_doc
+ * @property int $i_instr
  *
  * @property-read Position $position
  *
@@ -36,12 +39,14 @@ use yii\base\Exception;
  */
 class User extends ActiveRecord implements IdentityInterface
 {
+    public static $countInfo;
+    public static $totalUserID;
 
     public function behaviors()
     {
         return [TimestampBehavior::class,];
     }
-    
+
     public function attributeLabels()
     {
         return [
@@ -61,6 +66,9 @@ class User extends ActiveRecord implements IdentityInterface
             'date_receipt' => 'Дата устройства',
             'status' => 'активность',
             'email' => 'Электронная почта',
+            'i_act' => 'Новых событий',
+            'i_doc' => 'Новых документов',
+            'i_instr' => 'Новых инструктажей',
         ];
     }
 
@@ -147,5 +155,28 @@ class User extends ActiveRecord implements IdentityInterface
     public function getFullName()
     {
         return $this->last_name . ' ' . $this->first_name;
+    }
+
+    public static function getCountInfo()
+    {
+        $ID_user = Yii::$app->user->id;
+        $sql = Yii::$app->db->createCommand("SELECT SUM(`i_act` + `i_doc` + `i_instr`) FROM `users` WHERE `id` = {$ID_user}")->queryAll();
+        $count = $sql[0]['SUM(`i_act` + `i_doc` + `i_instr`)'];
+        if ($count == (null || 0)) {
+            self::$countInfo = null;
+        } else {
+            self::$countInfo = $count;
+        }
+
+    }
+
+    public function findAllUsersID()
+    {
+        $allID = [];
+        $sql = Yii::$app->db->createCommand("SELECT `id` FROM `users` WHERE 1")->queryAll();
+        foreach ($sql as $item => $id) {
+            $allID[] = $id['id'];
+        }
+        self::$totalUserID = $allID;
     }
 }

@@ -7,6 +7,7 @@ use app\controllers\FileUploadBehavior;
 use yii\base\Model;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\db\Exception;
 use yii\web\UploadedFile;
 
 /**
@@ -74,6 +75,60 @@ class File extends ActiveRecord
     public function getCategory()
     {
         return $this->hasOne(Category::class, ['id' => 'category_id']);
+    }
+
+    /** При загрузке документа */
+    public function infoDocInsert($doc_ID)
+    {
+        foreach (User::$totalUserID as $value) {
+            $sql = "INSERT INTO `info_doc` (`id_user`, `id_doc`) VALUES ({$value},{$doc_ID})";
+            \Yii::$app->db->createCommand($sql)->execute();
+            $sql2 = "UPDATE `users` SET `i_doc` = `i_doc` +1 WHERE `id` = {$value}";
+            \Yii::$app->db->createCommand($sql2)->execute();
+        };
+    }
+
+    /** При удалении документа Администратором
+     * @param $doc_ID
+     * @throws Exception
+     */
+    public function infoDocDelete($doc_ID)
+    {
+        (new User)->findAllUsersID();
+        foreach (User::$totalUserID as $value) {
+            $sql1 = \Yii::$app->db->createCommand("SELECT `status` FROM `info_doc` WHERE `id_user` = {$value} AND `id_doc` = {$doc_ID}")->query();
+            foreach ($sql1 as $val => $item) {
+                if ($item['status'] == 1) {
+                    break;
+                } else {
+                    $sql2 = "UPDATE `users` SET `i_doc` = `i_doc` -1 WHERE `id` = {$value}";
+                    \Yii::$app->db->createCommand($sql2)->execute();
+                }
+            }
+        }
+        $sql3 = "DELETE FROM `info_doc` WHERE id_doc = {$doc_ID}";
+        \Yii::$app->db->createCommand($sql3)->execute();
+    }
+
+    /** Действия при ознакомлении с документом
+     * @param $doc_ID
+     * @throws Exception
+     */
+    public static function markDocRead($doc_ID)
+    {
+        $user_ID = \Yii::$app->user->id;
+
+        $sql = \Yii::$app->db->createCommand("SELECT `status` FROM `info_doc` WHERE `id_user` = {$user_ID} AND `id_doc` = {$doc_ID}")->query();
+
+        foreach ($sql as $value => $item) {
+            if ($item['status'] != 1) {
+                $sql1 = "UPDATE `info_doc` SET `status` = 1 WHERE `id_user` = {$user_ID} AND `id_doc` = {$doc_ID}";
+                \Yii::$app->db->createCommand($sql1)->execute();
+
+                $sql2 = "UPDATE `users` SET `i_doc` = `i_doc` -1 WHERE `id` = {$user_ID}";
+                \Yii::$app->db->createCommand($sql2)->execute();
+            }
+        }
     }
 
 

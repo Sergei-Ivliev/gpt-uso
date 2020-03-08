@@ -1,5 +1,6 @@
 <?php
 
+use app\models\User;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 use yii\web\YiiAsset;
@@ -9,7 +10,6 @@ $this->params['breadcrumbs'][] = ['label' => 'Пользователи', 'url' =
 $this->params['breadcrumbs'][] = $this->title;
 
 YiiAsset::register($this);
-
 ?>
 
 <h1>Страница пользователя  <u><?= Html::encode(Yii::$app->user->identity->username)?></u></h1>

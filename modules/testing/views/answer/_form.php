@@ -8,16 +8,21 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model app\modules\testing\models\Answer */
 /* @var $form yii\widgets\ActiveForm */
-$id_question = Yii::$app->request->get('ID_question');
 ?>
 
 <div class="answer-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
+    Tests_Update
     <?= $form->field($model, 'id_question',['inputOptions' => ['value' => $id_question]])->hiddenInput()->label(false) ?>
 
     <?= $form->field($model, 'text')->textarea(['rows' => 6]) ?>
+
+    <?= $form->field($model, 'id_question',['inputOptions' => ['value' => $id_question]])->hiddenInput()->label(false) ?>
+
+    <?= $form->field($model, 'text')->textarea(['rows' => 6]) ?>
+
 
     <?= $form->field($model, 'type')->radioList(['right' => 'правильный' , 'wrong' => 'неправильный'], ['value' => 'wrong']) ?>
 
