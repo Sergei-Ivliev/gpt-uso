@@ -123,9 +123,8 @@ if (count($userBrief) == null) {
         </div>
         <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
             <div class="card-body">
-                <h4>В разработке</h4>
                 <ul>
-                    <?php foreach ($userDocs as $item => $name) { ?>
+                    <?php foreach ($userBrief as $item => $name) { ?>
                         <li><a href="../briefing/view?id=<?=$name['id']?>"><?=$name['title']?></a></li>
                     <?php } ?>
                 </ul>

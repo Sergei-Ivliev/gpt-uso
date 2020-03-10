@@ -118,11 +118,32 @@ class Activity extends ActiveRecord
     public function infoActionInsert($action_ID)
     {
         foreach (User::$totalUserID as $value) {
-            $sql = "INSERT INTO `info_action` (`id_user`, `id_action`) VALUES ({$value},{$action_ID})";
-            \Yii::$app->db->createCommand($sql)->execute();
-            $sql2 = "UPDATE `users` SET `i_act` = `i_act` +1 WHERE `id` = {$value}";
-            \Yii::$app->db->createCommand($sql2)->execute();
-        };
+            $sql0 = "SELECT `status` FROM `info_action` WHERE `id_user` = {$value} AND `id_action` = {$action_ID}";
+            $query0 = \Yii::$app->db->createCommand($sql0)->query();
+            $query = [];
+            foreach ($query0 as $item => $value0) {
+                $query[] = $value0;
+            }
+            if ($query == null) {
+                $sql = "INSERT INTO `info_action` (`id_user`, `id_action`, `status`) VALUES ({$value},{$action_ID}, 0)";
+                \Yii::$app->db->createCommand($sql)->execute();
+                $sql2 = "UPDATE `users` SET `i_act` = `i_act` +1 WHERE `id` = {$value}";
+                \Yii::$app->db->createCommand($sql2)->execute();
+            } else {
+                $status = null;
+                foreach ($query as $value1) {
+                    $status = $value1['status'];
+                }
+                if ($status == 1) {
+                    $sql = "UPDATE `info_action` SET `status` = 0 WHERE `id_user` = {$value} AND `id_action` = {$action_ID}";
+                    \Yii::$app->db->createCommand($sql)->execute();
+                    $sql2 = "UPDATE `users` SET `i_act` = `i_act` +1 WHERE `id` = {$value}";
+                    \Yii::$app->db->createCommand($sql2)->execute();
+                } else {
+                    continue;
+                }
+            }
+        }
     }
 
     /** При удалении события Администратором
@@ -170,11 +191,11 @@ class Activity extends ActiveRecord
 
     public function getActualActivities($user_ID)
     {
-        $sql = "SELECT activities.id, activities.title 
+        $sql = "SELECT activities.id, activities.title
                 FROM `activities` 
                 LEFT JOIN `info_action` 
                 ON activities.id = info_action.id_action
-                WHERE info_action.id_user = {$user_ID} AND info_action.status = ''";
+                WHERE info_action.id_user = {$user_ID} AND info_action.status = 0";
         $query = \Yii::$app->db->createCommand($sql)->queryAll();
 
         foreach ($query as $item => $value) {

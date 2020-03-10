@@ -113,7 +113,7 @@ class BriefingController extends Controller
             if ($item->load(Yii::$app->request->post()) && $item->validate()) {
                 if ($item->save()) {
                     (new User)->findAllUsersID();
-                    (new Briefing)->infoBriefInsert($item->id);
+                    (new Briefing)->infoBriefInsert($item->id, $item->user_id, $item->position_id);
                     return $this->redirect(['briefing/view', 'id' => $item->id]);
                 }
             }

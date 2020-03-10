@@ -57,9 +57,9 @@ class Briefing extends ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'date_start','section',], 'required'],
+            [['title', 'date_start', 'section',], 'required'],
 
-            [['title','type','section',], 'string'],
+            [['title', 'type', 'section',], 'string'],
 
             [['title'], 'string', 'min' => 8, 'max' => 160],
 
@@ -80,15 +80,72 @@ class Briefing extends ActiveRecord
         return $this->hasOne(Position::class, ['id' => 'position_id']);
     }
 
-    /** При создании инструктажа */
-    public function infoBriefInsert($brief_ID)
+    /** При создании инструктажа
+     * @param $brief_ID
+     * @param $user_id
+     * @param $position_id
+     * @throws Exception
+     */
+    public function infoBriefInsert($brief_ID, $user_id, $position_id)
     {
-        foreach (User::$totalUserID as $value) {
-            $sql = "INSERT INTO `info_brief` (`id_user`, `id_brief`) VALUES ({$value},{$brief_ID})";
-            \Yii::$app->db->createCommand($sql)->execute();
-            $sql2 = "UPDATE `users` SET `i_instr` = `i_instr` +1 WHERE `id` = {$value}";
-            \Yii::$app->db->createCommand($sql2)->execute();
-        };
+        $usersForBrief = [];
+
+        /** Поиск конкретного человека по ID. Должность указана или == ВСЕ */
+        if ($user_id != 555) {
+            $sqlUser = "SELECT users.id
+                    FROM `users` 
+                    LEFT JOIN `briefings` 
+                    ON users.id = briefings.user_id
+                    WHERE users.id = {$user_id}";
+            $array = \Yii::$app->db->createCommand($sqlUser)->query();
+            foreach ($array as $value) {
+                $usersForBrief[] = $value['id'];
+            }
+            /** Поиск группы по указанной должности. ID работника == ВСЕ */
+        } elseif ($user_id == 555 && $position_id != 13) {
+            $sqlPosition = "SELECT users.id
+                        FROM `users` 
+                        LEFT JOIN `briefings` 
+                        ON users.id = briefings.user_id
+                        WHERE users.position_id = {$position_id}";
+            $array = \Yii::$app->db->createCommand($sqlPosition)->queryAll();
+            foreach ($array as $value) {
+                $usersForBrief[] = $value['id'];
+            }
+            /** ID работника == ВСЕ, Должности == ВСЕ */
+        } elseif ($user_id == 555 && $position_id == 13) {
+            $usersForBrief = User::$totalUserID;
+        }
+
+        /** Выбранному массиву работников устанавливаем уведомления
+            в зависимости от того, новая запись или update имеющейся */
+        foreach ($usersForBrief as $value) {
+            $sql0 = "SELECT `status` FROM `info_brief` WHERE `id_user` = {$value} AND `id_brief` = {$brief_ID}";
+            $query0 = \Yii::$app->db->createCommand($sql0)->query();
+            $query = [];
+            foreach ($query0 as $item => $value0) {
+                $query[] = $value0;
+            }
+            if ($query == null) {
+                $sql = "INSERT INTO `info_brief` (`id_user`, `id_brief`, `status`) VALUES ({$value},{$brief_ID}, 0)";
+                \Yii::$app->db->createCommand($sql)->execute();
+                $sql2 = "UPDATE `users` SET `i_instr` = `i_instr` +1 WHERE `id` = {$value}";
+                \Yii::$app->db->createCommand($sql2)->execute();
+            } else {
+                $status = null;
+                foreach ($query as $value1) {
+                    $status = $value1['status'];
+                }
+                if ($status == 1) {
+                    $sql = "UPDATE `info_brief` SET `status` = null WHERE `id_user` = {$value} AND `id_brief` = {$brief_ID}";
+                    \Yii::$app->db->createCommand($sql)->execute();
+                    $sql2 = "UPDATE `users` SET `i_instr` = `i_instr` +1 WHERE `id` = {$value}";
+                    \Yii::$app->db->createCommand($sql2)->execute();
+                } else {
+                    continue;
+                }
+            }
+        }
     }
 
     /** При удалении инструктажа Администратором
@@ -113,7 +170,7 @@ class Briefing extends ActiveRecord
         \Yii::$app->db->createCommand($sql3)->execute();
     }
 
-    /** Действия при ознакомлении с инструктажём
+    /** Действия при ознакомлении с инструктажём (метка "ознакомлен")
      * @param $brief_ID
      * @throws Exception
      */
@@ -123,24 +180,33 @@ class Briefing extends ActiveRecord
 
         $sql = \Yii::$app->db->createCommand("SELECT `status` FROM `info_brief` WHERE `id_user` = {$user_ID} AND `id_brief` = {$brief_ID}")->query();
 
-        foreach ($sql as $value => $item) {
-            if ($item['status'] != 1) {
-                $sql1 = "UPDATE `info_brief` SET `status` = 1 WHERE `id_user` = {$user_ID} AND `id_brief` = {$brief_ID}";
-                \Yii::$app->db->createCommand($sql1)->execute();
+        if ($sql == null) {
+            return;
+        } else {
+            foreach ($sql as $value => $item) {
+                if ($item['status'] != 1) {
+                    $sql1 = "UPDATE `info_brief` SET `status` = 1 WHERE `id_user` = {$user_ID} AND `id_brief` = {$brief_ID}";
+                    \Yii::$app->db->createCommand($sql1)->execute();
 
-                $sql2 = "UPDATE `users` SET `i_instr` = `i_instr` -1 WHERE `id` = {$user_ID}";
-                \Yii::$app->db->createCommand($sql2)->execute();
+                    $sql2 = "UPDATE `users` SET `i_instr` = `i_instr` -1 WHERE `id` = {$user_ID}";
+                    \Yii::$app->db->createCommand($sql2)->execute();
+                }
             }
         }
     }
 
+    /** Для отображения в ЛК
+     * @param $user_ID
+     * @return array
+     * @throws Exception
+     */
     public function getActualBriefings($user_ID)
     {
         $sql = "SELECT briefings.id, briefings.title 
                 FROM `briefings` 
                 LEFT JOIN `info_brief` 
                 ON briefings.id = info_brief.id_brief
-                WHERE info_brief.id_user = {$user_ID} AND info_brief.status = ''";
+                WHERE info_brief.id_user = {$user_ID} AND info_brief.status = 0";
         $query = \Yii::$app->db->createCommand($sql)->queryAll();
 
         foreach ($query as $item => $value) {

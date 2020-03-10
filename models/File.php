@@ -78,15 +78,40 @@ class File extends ActiveRecord
         return $this->hasOne(Category::class, ['id' => 'category_id']);
     }
 
-    /** При загрузке документа */
+    /** При загрузке документа
+     * @param $doc_ID
+     * @throws Exception
+     */
     public function infoDocInsert($doc_ID)
     {
         foreach (User::$totalUserID as $value) {
-            $sql = "INSERT INTO `info_doc` (`id_user`, `id_doc`) VALUES ({$value},{$doc_ID})";
-            \Yii::$app->db->createCommand($sql)->execute();
-            $sql2 = "UPDATE `users` SET `i_doc` = `i_doc` +1 WHERE `id` = {$value}";
-            \Yii::$app->db->createCommand($sql2)->execute();
-        };
+            $sql0 = "SELECT `status` FROM `info_doc` WHERE `id_user` = {$value} AND `id_doc` = {$doc_ID}";
+            $query0 = \Yii::$app->db->createCommand($sql0)->query();
+            $query = [];
+            foreach ($query0 as $item => $value0) {
+                $query[] = $value0;
+            }
+            if ($query == null) {
+                $sql = "INSERT INTO `info_doc` (`id_user`, `id_doc`, `status`) VALUES ({$value},{$doc_ID}, 0)";
+                \Yii::$app->db->createCommand($sql)->execute();
+                $sql2 = "UPDATE `users` SET `i_doc` = `i_doc` +1 WHERE `id` = {$value}";
+                \Yii::$app->db->createCommand($sql2)->execute();
+            } else {
+                $status = null;
+                foreach ($query as $value1) {
+                    $status = $value1['status'];
+                }
+                if ($status == 1) {
+                    $sql = "UPDATE `info_doc` SET `status` = 0 WHERE `id_user` = {$value} AND `id_doc` = {$doc_ID}";
+                    \Yii::$app->db->createCommand($sql)->execute();
+                    $sql2 = "UPDATE `users` SET `i_doc` = `i_doc` +1 WHERE `id` = {$value}";
+                    \Yii::$app->db->createCommand($sql2)->execute();
+                } else {
+                    continue;
+                }
+            }
+        }
+
     }
 
     /** При удалении документа Администратором
@@ -138,7 +163,7 @@ class File extends ActiveRecord
                 FROM `files` 
                 LEFT JOIN `info_doc` 
                 ON files.id = info_doc.id_doc
-                WHERE info_doc.id_user = {$user_ID} AND info_doc.status = ''";
+                WHERE info_doc.id_user = {$user_ID} AND info_doc.status = 0";
         $query = \Yii::$app->db->createCommand($sql)->queryAll();
 
         foreach ($query as $item => $value) {
