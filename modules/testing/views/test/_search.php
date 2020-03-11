@@ -15,14 +15,6 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-<!--    Дублирующая форма поиска-->
-
-<!--    --><?//= $form->field($model, 'id') ?>
-<!---->
-<!--    --><?//= $form->field($model, 'name') ?>
-<!---->
-<!--    --><?//= $form->field($model, 'description') ?>
-
     <?= $form->field($model, 'closed')
         ->radioList([
             '0'=>'Активные тесты',
