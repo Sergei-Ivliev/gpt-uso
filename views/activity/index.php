@@ -82,7 +82,7 @@ if (Yii::$app->user->can('admin')) {
     'columns' => $columns,
 ]) ?>
 
-<div class="site-about" style="margin-bottom: 18px;">
+<div class="site-about" style="margin-bottom: 18px; margin-top: -30px;">
     <h1>Новостной блок</h1>
 </div>
 
