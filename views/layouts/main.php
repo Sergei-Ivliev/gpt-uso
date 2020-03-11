@@ -71,17 +71,15 @@ echo Nav::widget([
         ['label' => 'Пройти тест', 'url' => ['/test/index'],
             'visible' => Yii::$app->user->can('user') &&
                 Result::$testForUser[0] !== null],
-
-        ['label' => 'Работники', 'url' => ['/user/index'], 'visible' => Yii::$app->user->can('admin')],
+        ['label' => 'Работники', 'url' => ['/user/index'], 'visible'=>Yii::$app->user->can('admin')],
         ['label' => 'События', 'url' => ['/activity/index']],
         [
-            'label' => 'Работа с тестами',
-            'items' => [
-                ['label' => 'Создать тест', 'url' => ['/testing/test/create']],
+           'label' => 'Работа с тестами',
+           'items' => [
                 ['label' => 'Список тестов', 'url' => ['/testing/test']],
                 ['label' => 'Список вопросов', 'url' => ['/testing/question']],
                 ['label' => 'Список ответов', 'url' => ['/testing/answer']],
-            ], 'visible' => Yii::$app->user->can('admin')
+            ], 'visible'=>Yii::$app->user->can('admin')
         ],
         [
             'label' => '<span>Личный кабинет&nbsp;<span id="badge_target" class="badge badge-info">'
